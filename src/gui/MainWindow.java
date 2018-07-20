@@ -1,11 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
-
-import javafx.scene.paint.Color;
 
 /**
  *
@@ -38,18 +31,21 @@ public class MainWindow extends javax.swing.JFrame {
         booksPanelSidebar = new javax.swing.JPanel();
         booksPanelSidebarHeader = new javax.swing.JPanel();
         booksPanelSidebarHeaderText = new javax.swing.JLabel();
+        mbooks = new javax.swing.JButton();
+        abook = new javax.swing.JButton();
         memberPanel = new javax.swing.JPanel();
         memberPanelSidebar = new javax.swing.JPanel();
         memberPanelSidebarHeader = new javax.swing.JPanel();
         memberPanelSidebarHeaderText = new javax.swing.JLabel();
         mmember = new javax.swing.JButton();
         amember = new javax.swing.JButton();
-        nmember = new javax.swing.JButton();
         memberPanelContainer = new javax.swing.JLayeredPane();
         mmemberPanel = new javax.swing.JPanel();
         mmemberPanelSearchText = new javax.swing.JLabel();
         mmemberPanelSearchBox = new javax.swing.JTextField();
         mmemberPanelSearchButton = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        memberSearchResult = new javax.swing.JTable();
         amemberPanel = new javax.swing.JPanel();
         amemberPanelTitle = new javax.swing.JLabel();
         amemberNameLabel = new javax.swing.JLabel();
@@ -206,7 +202,7 @@ public class MainWindow extends javax.swing.JFrame {
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsPanelLayout.createSequentialGroup()
                 .addComponent(settingsPanelSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 844, Short.MAX_VALUE))
+                .addGap(0, 805, Short.MAX_VALUE))
         );
         settingsPanelLayout.setVerticalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,18 +229,56 @@ public class MainWindow extends javax.swing.JFrame {
             .addComponent(booksPanelSidebarHeaderText, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
         );
 
+        mbooks.setBackground(new java.awt.Color(255, 255, 255));
+        mbooks.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        mbooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/books2.png"))); // NOI18N
+        mbooks.setText("Manage Books");
+        mbooks.setBorderPainted(false);
+        mbooks.setFocusPainted(false);
+        mbooks.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        mbooks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                mbooksMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                mbooksMouseExited(evt);
+            }
+        });
+
+        abook.setBackground(new java.awt.Color(255, 255, 255));
+        abook.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        abook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/books2.png"))); // NOI18N
+        abook.setText("Add Books");
+        abook.setBorderPainted(false);
+        abook.setFocusPainted(false);
+        abook.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        abook.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                abookMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                abookMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout booksPanelSidebarLayout = new javax.swing.GroupLayout(booksPanelSidebar);
         booksPanelSidebar.setLayout(booksPanelSidebarLayout);
         booksPanelSidebarLayout.setHorizontalGroup(
             booksPanelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(booksPanelSidebarHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mbooks, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(abook, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         booksPanelSidebarLayout.setVerticalGroup(
             booksPanelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(booksPanelSidebarLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(booksPanelSidebarHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 530, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(mbooks, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(abook, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 443, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout booksPanelLayout = new javax.swing.GroupLayout(booksPanel);
@@ -322,30 +356,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        nmember.setBackground(new java.awt.Color(255, 255, 255));
-        nmember.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        nmember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/send.png"))); // NOI18N
-        nmember.setText("Notity member for due book");
-        nmember.setBorderPainted(false);
-        nmember.setFocusPainted(false);
-        nmember.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        nmember.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                nmemberMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                nmemberMouseExited(evt);
-            }
-        });
-
         javax.swing.GroupLayout memberPanelSidebarLayout = new javax.swing.GroupLayout(memberPanelSidebar);
         memberPanelSidebar.setLayout(memberPanelSidebarLayout);
         memberPanelSidebarLayout.setHorizontalGroup(
             memberPanelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(memberPanelSidebarHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(mmember, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(amember, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(nmember, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(amember, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
         memberPanelSidebarLayout.setVerticalGroup(
             memberPanelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,9 +373,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(mmember, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(amember, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nmember, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 400, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         mmemberPanelSearchText.setFont(new java.awt.Font("Source Sans Pro Light", 0, 24)); // NOI18N
@@ -374,6 +389,24 @@ public class MainWindow extends javax.swing.JFrame {
         mmemberPanelSearchButton.setContentAreaFilled(false);
         mmemberPanelSearchButton.setFocusPainted(false);
 
+        memberSearchResult.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Name", "Address", "Due_books"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(memberSearchResult);
+
         javax.swing.GroupLayout mmemberPanelLayout = new javax.swing.GroupLayout(mmemberPanel);
         mmemberPanel.setLayout(mmemberPanelLayout);
         mmemberPanelLayout.setHorizontalGroup(
@@ -381,10 +414,14 @@ public class MainWindow extends javax.swing.JFrame {
             .addComponent(mmemberPanelSearchText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(mmemberPanelLayout.createSequentialGroup()
                 .addGap(265, 265, 265)
-                .addComponent(mmemberPanelSearchBox, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                .addComponent(mmemberPanelSearchBox, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(mmemberPanelSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(233, 233, 233))
+            .addGroup(mmemberPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3)
+                .addContainerGap())
         );
         mmemberPanelLayout.setVerticalGroup(
             mmemberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,7 +431,9 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(mmemberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mmemberPanelSearchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mmemberPanelSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         amemberPanel.setBackground(new java.awt.Color(240, 240, 239));
@@ -468,7 +507,7 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(amemberPhoneNumber, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(amemberIDNumber, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
                             .addComponent(amemberName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(47, 47, 47))
             .addComponent(amemberPanelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -661,17 +700,10 @@ public class MainWindow extends javax.swing.JFrame {
         amember.setBackground(java.awt.Color.white);
     }//GEN-LAST:event_amemberMouseExited
 
-    private void nmemberMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nmemberMouseEntered
-        nmember.setBackground(java.awt.Color.cyan);
-    }//GEN-LAST:event_nmemberMouseEntered
-
-    private void nmemberMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nmemberMouseExited
-        nmember.setBackground(java.awt.Color.white);
-    }//GEN-LAST:event_nmemberMouseExited
-
     private void mmemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmemberActionPerformed
         amemberPanel.setVisible(false);
         mmemberPanel.setVisible(true);
+
     }//GEN-LAST:event_mmemberActionPerformed
 
     private void amemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amemberActionPerformed
@@ -679,9 +711,26 @@ public class MainWindow extends javax.swing.JFrame {
         mmemberPanel.setVisible(false);
     }//GEN-LAST:event_amemberActionPerformed
 
+    private void mbooksMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mbooksMouseEntered
+        mbooks.setBackground(java.awt.Color.cyan);
+    }//GEN-LAST:event_mbooksMouseEntered
+
+    private void mbooksMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mbooksMouseExited
+        mbooks.setBackground(java.awt.Color.white);
+    }//GEN-LAST:event_mbooksMouseExited
+
+    private void abookMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abookMouseEntered
+        abook.setBackground(java.awt.Color.cyan);
+    }//GEN-LAST:event_abookMouseEntered
+
+    private void abookMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abookMouseExited
+        abook.setBackground(java.awt.Color.white);
+    }//GEN-LAST:event_abookMouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MainContainer;
+    private javax.swing.JButton abook;
     private javax.swing.JButton addButton;
     private javax.swing.JButton amember;
     private javax.swing.JTextField amemberEmail;
@@ -705,20 +754,22 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel booksPanelSidebarHeaderText;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLayeredPane layerContainer;
+    private javax.swing.JButton mbooks;
     private javax.swing.JButton memberButton;
     public javax.swing.JPanel memberPanel;
     private javax.swing.JLayeredPane memberPanelContainer;
     private javax.swing.JPanel memberPanelSidebar;
     private javax.swing.JPanel memberPanelSidebarHeader;
     private javax.swing.JLabel memberPanelSidebarHeaderText;
+    private javax.swing.JTable memberSearchResult;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JButton mmember;
     private javax.swing.JPanel mmemberPanel;
     private javax.swing.JTextField mmemberPanelSearchBox;
     private javax.swing.JButton mmemberPanelSearchButton;
     private javax.swing.JLabel mmemberPanelSearchText;
-    private javax.swing.JButton nmember;
     private javax.swing.JButton resetButton;
     private javax.swing.JButton settingsButton;
     public javax.swing.JPanel settingsPanel;

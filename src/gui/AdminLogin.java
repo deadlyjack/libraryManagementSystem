@@ -6,6 +6,7 @@
 package gui;
 
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -39,6 +40,7 @@ public class AdminLogin extends javax.swing.JFrame {
         password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
         setUndecorated(true);
 
         mainFrame.setBackground(new java.awt.Color(247, 246, 244));
@@ -71,6 +73,7 @@ public class AdminLogin extends javax.swing.JFrame {
 
         accountType.add(adminRadioButton);
         adminRadioButton.setFont(new java.awt.Font("DejaVu Sans", 0, 11)); // NOI18N
+        adminRadioButton.setSelected(true);
         adminRadioButton.setText("Admin");
         adminRadioButton.setContentAreaFilled(false);
         adminRadioButton.setFocusPainted(false);
@@ -170,12 +173,22 @@ public class AdminLogin extends javax.swing.JFrame {
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         MainWindow mainWindow = new MainWindow();
+        AdminWindow adminWindow = new AdminWindow();
         this.setVisible(false);
-        mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        mainWindow.settingsPanel.setVisible(false);
-        mainWindow.booksPanel.setVisible(false);
-        mainWindow.memberPanel.setVisible(false);
-        mainWindow.setVisible(true);
+        if(librarian.isSelected()){
+            mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            mainWindow.settingsPanel.setVisible(false);
+            mainWindow.booksPanel.setVisible(false);
+            mainWindow.memberPanel.setVisible(false);
+            mainWindow.setIconImage(Main.icon.getImage());
+            mainWindow.setVisible(true);
+        }else{
+            adminWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            adminWindow.setIconImage(Main.icon.getImage());
+            adminWindow.alibrarianPanel.setVisible(false);
+            adminWindow.mlibrarianPanel.setVisible(false);
+            adminWindow.setVisible(true);
+        }
     }//GEN-LAST:event_loginButtonMouseClicked
 
     private void closeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeButtonMouseClicked
