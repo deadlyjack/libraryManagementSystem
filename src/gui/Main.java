@@ -8,15 +8,17 @@ package gui;
 import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import server.DataBase;
 
 /**
  *
  * @author delle
  */
 public class Main {
-    
     public static  AdminLogin adminLogin = new AdminLogin();
     public static void main(String[] args){
+        DataBase.InitDatabase();
+        DataBase.OpenConnection();
         SplashScreen splash = new SplashScreen();
         splash.setIconImage(icon.getImage());
         splash.setVisible(true);

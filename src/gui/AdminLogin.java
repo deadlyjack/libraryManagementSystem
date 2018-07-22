@@ -6,8 +6,13 @@
 package gui;
 
 import java.awt.event.WindowEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import server.DataBase;
 
 /**
  *
@@ -38,6 +43,7 @@ public class AdminLogin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         password = new javax.swing.JPasswordField();
+        error_msg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -56,6 +62,7 @@ public class AdminLogin extends javax.swing.JFrame {
 
         loginButton.setText("login");
         loginButton.setContentAreaFilled(false);
+        loginButton.setEnabled(false);
         loginButton.setFocusPainted(false);
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -63,9 +70,12 @@ public class AdminLogin extends javax.swing.JFrame {
             }
         });
 
+        userName.setText("admin");
+        userName.setEnabled(false);
+
         jLabel2.setFont(new java.awt.Font("DejaVu Sans", 0, 11)); // NOI18N
         jLabel2.setLabelFor(userName);
-        jLabel2.setText("UserName");
+        jLabel2.setText("Username");
 
         jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 11)); // NOI18N
         jLabel3.setLabelFor(userName);
@@ -77,12 +87,22 @@ public class AdminLogin extends javax.swing.JFrame {
         adminRadioButton.setText("Admin");
         adminRadioButton.setContentAreaFilled(false);
         adminRadioButton.setFocusPainted(false);
+        adminRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminRadioButtonActionPerformed(evt);
+            }
+        });
 
         accountType.add(librarian);
         librarian.setFont(new java.awt.Font("DejaVu Sans", 0, 11)); // NOI18N
         librarian.setText("Librarian");
         librarian.setContentAreaFilled(false);
         librarian.setFocusPainted(false);
+        librarian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                librarianActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 255));
 
@@ -103,6 +123,15 @@ public class AdminLogin extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
         );
 
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                passwordKeyReleased(evt);
+            }
+        });
+
+        error_msg.setForeground(new java.awt.Color(255, 0, 0));
+        error_msg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout mainFrameLayout = new javax.swing.GroupLayout(mainFrame);
         mainFrame.setLayout(mainFrameLayout);
         mainFrameLayout.setHorizontalGroup(
@@ -112,7 +141,8 @@ public class AdminLogin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainFrameLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(error_msg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(loginButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(closeButton))
@@ -150,9 +180,11 @@ public class AdminLogin extends javax.swing.JFrame {
                     .addComponent(adminRadioButton)
                     .addComponent(librarian))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loginButton)
-                    .addComponent(closeButton))
+                .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(error_msg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(loginButton)
+                        .addComponent(closeButton)))
                 .addContainerGap())
         );
 
@@ -174,20 +206,38 @@ public class AdminLogin extends javax.swing.JFrame {
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         MainWindow mainWindow = new MainWindow();
         AdminWindow adminWindow = new AdminWindow();
-        this.setVisible(false);
+        ResultSet rs;
+        String staffId = this.userName.getText();
+        String password = String.valueOf(this.password.getPassword());
         if(librarian.isSelected()){
-            mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            mainWindow.settingsPanel.setVisible(false);
-            mainWindow.booksPanel.setVisible(false);
-            mainWindow.memberPanel.setVisible(false);
-            mainWindow.setIconImage(Main.icon.getImage());
-            mainWindow.setVisible(true);
+            try {
+                rs = DataBase.getValueWhere("librarian", "id", "staffID='"+staffId+"'&&password='"+password+"'");
+                if(rs.next()){
+                    mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    mainWindow.settingsPanel.setVisible(false);
+                    mainWindow.booksPanel.setVisible(false);
+                    mainWindow.memberPanel.setVisible(false);
+                    mainWindow.setIconImage(Main.icon.getImage());
+                    mainWindow.setVisible(true);
+                    this.setVisible(false);
+                }else this.error_msg.setText("incorrect password!");
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }else{
-            adminWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            adminWindow.setIconImage(Main.icon.getImage());
-            adminWindow.alibrarianPanel.setVisible(false);
-            adminWindow.mlibrarianPanel.setVisible(false);
-            adminWindow.setVisible(true);
+            try {
+                rs = DataBase.getValueWhere("admin", "password", "id=1&&password='"+password+"'");
+                if(rs.next()){             
+                    adminWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    adminWindow.setIconImage(Main.icon.getImage());
+                    adminWindow.alibrarianPanel.setVisible(false);
+                    adminWindow.mlibrarianPanel.setVisible(false);
+                    adminWindow.setVisible(true);
+                    this.setVisible(false);
+                }else this.error_msg.setText("incorrect password!");
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_loginButtonMouseClicked
 
@@ -195,11 +245,28 @@ public class AdminLogin extends javax.swing.JFrame {
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }//GEN-LAST:event_closeButtonMouseClicked
 
+    private void librarianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_librarianActionPerformed
+        this.userName.setText("");
+        this.userName.setEnabled(true);
+    }//GEN-LAST:event_librarianActionPerformed
+
+    private void adminRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminRadioButtonActionPerformed
+        this.userName.setText("admin");
+        this.userName.setEnabled(false);
+    }//GEN-LAST:event_adminRadioButtonActionPerformed
+
+    private void passwordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyReleased
+        if(this.error_msg.getText().length() != 0) this.error_msg.setText("");
+        if(String.valueOf(this.password.getPassword()).length() >= 4) this.loginButton.setEnabled(true);
+        else this.loginButton.setEnabled(false);
+    }//GEN-LAST:event_passwordKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup accountType;
     private javax.swing.JRadioButton adminRadioButton;
     private javax.swing.JButton closeButton;
+    private javax.swing.JLabel error_msg;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
