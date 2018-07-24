@@ -1,5 +1,8 @@
 package gui;
 
+import java.sql.ResultSet;
+import server.DataBase;
+
 /**
  *
  * @author delle
@@ -11,6 +14,11 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
+        this.db = new DataBase();
+        this.db.OpenConnection();
+        this.settingsPanel.setVisible(false);
+        this.booksPanel.setVisible(false);
+        this.memberPanel.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -725,7 +733,10 @@ public class MainWindow extends javax.swing.JFrame {
         abook.setBackground(java.awt.Color.white);
     }//GEN-LAST:event_abookMouseExited
 
-
+    public void GetSession(ResultSet rs){
+        this.db.SessionStart(rs);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MainContainer;
     private javax.swing.JButton abook;
@@ -775,4 +786,5 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel settingsPanelSidebarHeader;
     private javax.swing.JLabel settingsPanelSidebarHeaderText;
     // End of variables declaration//GEN-END:variables
+    private DataBase db;
 }

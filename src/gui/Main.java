@@ -5,20 +5,16 @@
  */
 package gui;
 
-import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import server.DataBase;
 
 /**
  *
  * @author delle
  */
 public class Main {
-    public static  AdminLogin adminLogin = new AdminLogin();
+    public static  Login adminLogin = new Login();
     public static void main(String[] args){
-        DataBase.InitDatabase();
-        DataBase.OpenConnection();
+        ImageIcon icon = new ImageIcon("D:\\projects\\java_projects\\LibraryManagemant\\src\\assests\\icon.png");
         SplashScreen splash = new SplashScreen();
         splash.setIconImage(icon.getImage());
         splash.setVisible(true);
@@ -36,6 +32,4 @@ public class Main {
 
         }
     }
-    
-    public static ImageIcon icon = new ImageIcon("D:\\projects\\java_projects\\LibraryManagemant\\src\\assests\\icon.png");
 }
