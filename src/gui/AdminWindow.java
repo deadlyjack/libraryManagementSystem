@@ -119,7 +119,7 @@ public class AdminWindow extends javax.swing.JFrame {
         delteLibrarianButton = new javax.swing.JButton();
         blockLibrarianButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        notificationText = new javax.swing.JTextArea();
         sendNotification = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
@@ -617,6 +617,11 @@ public class AdminWindow extends javax.swing.JFrame {
 
         searchStaffID.setMaximumSize(new java.awt.Dimension(150, 28));
         searchStaffID.setMinimumSize(new java.awt.Dimension(100, 28));
+        searchStaffID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchStaffIDKeyReleased(evt);
+            }
+        });
 
         mlibrarianSearchButton.setBackground(new java.awt.Color(240, 240, 239));
         mlibrarianSearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/search.png"))); // NOI18N
@@ -660,16 +665,21 @@ public class AdminWindow extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setMaximumSize(new java.awt.Dimension(600, 60));
-        jTextArea1.setMinimumSize(new java.awt.Dimension(300, 60));
-        jScrollPane2.setViewportView(jTextArea1);
+        notificationText.setColumns(20);
+        notificationText.setRows(5);
+        notificationText.setMaximumSize(new java.awt.Dimension(600, 60));
+        notificationText.setMinimumSize(new java.awt.Dimension(300, 60));
+        jScrollPane2.setViewportView(notificationText);
 
         sendNotification.setBackground(new java.awt.Color(240, 240, 239));
         sendNotification.setText("send");
         sendNotification.setEnabled(false);
         sendNotification.setFocusPainted(false);
+        sendNotification.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendNotificationActionPerformed(evt);
+            }
+        });
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("send message");
@@ -961,6 +971,7 @@ public class AdminWindow extends javax.swing.JFrame {
                     this.mlibrarianNameLabel.setText(rs.getString("name"));
                     this.mlibrarianEmilLabel.setText(rs.getString("email"));
                     this.delteLibrarianButton.setEnabled(true);
+                    this.sendNotification.setEnabled(true);
                     if(rs.getString("isBlocked").equals("1")) this.blockLibrarianButton.setText("unblock");
                     else this.blockLibrarianButton.setText("block");
                     this.blockLibrarianButton.setEnabled(true);
@@ -997,6 +1008,22 @@ public class AdminWindow extends javax.swing.JFrame {
             this.mlibrarianMsg.setText("Failed to block librarian!");
         }
     }//GEN-LAST:event_blockLibrarianButtonActionPerformed
+
+    private void sendNotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendNotificationActionPerformed
+        if(this.db.updateData("librarian", "msg='"+this.notificationText.getText()+"'", "staffID='"+this.searchStaffID.getText()+"'") != 0){
+            this.mlibrarianMsg.setForeground(Color.green);
+            this.mlibrarianMsg.setText("Message sent!"); 
+        }else{
+            this.mlibrarianMsg.setForeground(Color.red);
+            this.mlibrarianMsg.setText("Failed to send message!");          
+        }
+    }//GEN-LAST:event_sendNotificationActionPerformed
+
+    private void searchStaffIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchStaffIDKeyReleased
+        this.delteLibrarianButton.setEnabled(false);
+        this.sendNotification.setEnabled(false);
+        this.blockLibrarianButton.setEnabled(false);
+    }//GEN-LAST:event_searchStaffIDKeyReleased
 
     private void resetForm(){
         this.staffid.setText("");
@@ -1053,7 +1080,6 @@ public class AdminWindow extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton librarian;
     private javax.swing.JPanel librarianPanel;
     private javax.swing.JTable librarianSearchResult;
@@ -1068,6 +1094,7 @@ public class AdminWindow extends javax.swing.JFrame {
     private javax.swing.JButton mlibrarianSearchButton;
     private javax.swing.JLabel msg;
     private javax.swing.JTextField name;
+    private javax.swing.JTextArea notificationText;
     private javax.swing.JTextField password;
     private javax.swing.JTextField phone;
     private javax.swing.JButton resetButton;
