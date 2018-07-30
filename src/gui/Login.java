@@ -5,6 +5,7 @@
  */
 package gui;
 
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +28,7 @@ public class Login extends javax.swing.JFrame {
 //        this.setIconImage(this.icon.getImage());
         initComponents();
         this.db = new DataBase();
-        this.icon = new ImageIcon("D:\\projects\\java_projects\\LibraryManagemant\\src\\assests\\icon.png");
+        this.icon = new ImageIcon(System.getProperty("user.dir")+"/src/assests/icon.png");
         this.db.OpenConnection();
     }
 
@@ -260,6 +261,9 @@ public class Login extends javax.swing.JFrame {
         if(this.error_msg.getText().length() != 0) this.error_msg.setText("");
         if(String.valueOf(this.password.getPassword()).length() >= 4) this.loginButton.setEnabled(true);
         else this.loginButton.setEnabled(false);
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) this.loginButtonMouseClicked(null);
+        if(evt.getKeyCode() == KeyEvent.VK_ESCAPE) this.closeButtonMouseClicked(null);
     }//GEN-LAST:event_passwordKeyReleased
 
 

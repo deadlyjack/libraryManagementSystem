@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -33,15 +35,22 @@ public class AdminWindow extends javax.swing.JFrame {
         this.SettingsPhone.setText(this.db.GetSessionValue("phone"));
         this.SettingsEmail.setText(this.db.GetSessionValue("email"));
         
-        if(!this.db.GetSessionValue("name").equals("-")){
+        if(!this.db.GetSessionValue("name").equals(" ")){
             this.SettingsName.setEditable(false);
             this.SettingsStaffID.setEditable(false);
         }
+        if(this.db.GetSessionValue("name").equals(" "))
+            this.SettingsName.setText("");
+        if(this.db.GetSessionValue("staffID").equals(" "))
+            this.SettingsStaffID.setText("");
+        if(this.db.GetSessionValue("email").equals(" "))
+            this.SettingsEmail.setText("");
+        if(this.db.GetSessionValue("phone").equals(" "))
+            this.SettingsPhone.setText("");
+            
         resultTableRender();
     }
-    
-    private void resultTableRender(){
-        ResultSet rs = this.db.getRows("librarian");
+    private void TableRender(ResultSet rs){
         DefaultTableModel resultTable = (DefaultTableModel) this.librarianSearchResult.getModel();
         
         resultTable.setRowCount(0);
@@ -52,6 +61,16 @@ public class AdminWindow extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AdminWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void resultTableRender(){
+        ResultSet rs = this.db.getRows("librarian");
+        TableRender(rs);
+    }
+
+    private void resultTableRender(String condition){
+        ResultSet rs = this.db.getRows("librarian", condition);
+        TableRender(rs);
     }
 
     @SuppressWarnings("unchecked")
@@ -90,6 +109,7 @@ public class AdminWindow extends javax.swing.JFrame {
         mlibrarianPanelSearchButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         librarianSearchResult = new javax.swing.JTable();
+        reloadButton = new javax.swing.JButton();
         settingsPanel = new javax.swing.JPanel();
         settingsPanelHeader = new javax.swing.JLabel();
         SettingsStaffIDlable = new javax.swing.JLabel();
@@ -214,7 +234,7 @@ public class AdminWindow extends javax.swing.JFrame {
 
         mlibrarian.setBackground(new java.awt.Color(255, 255, 255));
         mlibrarian.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        mlibrarian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/settings2.png"))); // NOI18N
+        mlibrarian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/settings3.png"))); // NOI18N
         mlibrarian.setText("Manage librarian");
         mlibrarian.setBorderPainted(false);
         mlibrarian.setFocusPainted(false);
@@ -395,8 +415,10 @@ public class AdminWindow extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addComponent(clearAll)
-                .addGap(0, 373, Short.MAX_VALUE))
+                .addGap(0, 365, Short.MAX_VALUE))
         );
+
+        librarianPanel.setBackground(new java.awt.Color(240, 240, 239));
 
         mlibrarianPanelHeader.setFont(new java.awt.Font("Source Sans Pro Light", 0, 24)); // NOI18N
         mlibrarianPanelHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -404,12 +426,27 @@ public class AdminWindow extends javax.swing.JFrame {
         mlibrarianPanelHeader.setText("Search For Librarian");
 
         mlibrarianPanelSearchBox.setToolTipText("Enter librarian ID");
+        mlibrarianPanelSearchBox.setMaximumSize(new java.awt.Dimension(600, 30));
+        mlibrarianPanelSearchBox.setMinimumSize(new java.awt.Dimension(200, 30));
+        mlibrarianPanelSearchBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                mlibrarianPanelSearchBoxKeyReleased(evt);
+            }
+        });
 
+        mlibrarianPanelSearchButton.setBackground(new java.awt.Color(240, 240, 239));
         mlibrarianPanelSearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/search.png"))); // NOI18N
         mlibrarianPanelSearchButton.setBorder(null);
         mlibrarianPanelSearchButton.setBorderPainted(false);
-        mlibrarianPanelSearchButton.setContentAreaFilled(false);
+        mlibrarianPanelSearchButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         mlibrarianPanelSearchButton.setFocusPainted(false);
+        mlibrarianPanelSearchButton.setMaximumSize(new java.awt.Dimension(30, 30));
+        mlibrarianPanelSearchButton.setMinimumSize(new java.awt.Dimension(30, 30));
+        mlibrarianPanelSearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mlibrarianPanelSearchButtonActionPerformed(evt);
+            }
+        });
 
         librarianSearchResult.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -440,21 +477,35 @@ public class AdminWindow extends javax.swing.JFrame {
         jScrollPane1.setViewportView(librarianSearchResult);
         librarianSearchResult.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        reloadButton.setBackground(new java.awt.Color(240, 240, 239));
+        reloadButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/reload.png"))); // NOI18N
+        reloadButton.setBorderPainted(false);
+        reloadButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        reloadButton.setFocusPainted(false);
+        reloadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reloadButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout librarianPanelLayout = new javax.swing.GroupLayout(librarianPanel);
         librarianPanel.setLayout(librarianPanelLayout);
         librarianPanelLayout.setHorizontalGroup(
             librarianPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mlibrarianPanelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(librarianPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(librarianPanelLayout.createSequentialGroup()
-                .addGap(309, 309, 309)
-                .addComponent(mlibrarianPanelSearchBox, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mlibrarianPanelSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(277, 277, 277))
-            .addComponent(mlibrarianPanelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(librarianPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(librarianPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(librarianPanelLayout.createSequentialGroup()
+                        .addComponent(reloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(244, 244, 244)
+                        .addComponent(mlibrarianPanelSearchBox, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mlibrarianPanelSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(277, 277, 277))))
         );
         librarianPanelLayout.setVerticalGroup(
             librarianPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -462,10 +513,11 @@ public class AdminWindow extends javax.swing.JFrame {
                 .addComponent(mlibrarianPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(librarianPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mlibrarianPanelSearchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mlibrarianPanelSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mlibrarianPanelSearchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mlibrarianPanelSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -596,7 +648,7 @@ public class AdminWindow extends javax.swing.JFrame {
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(SettingsSaveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(SettingsMsg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 323, Short.MAX_VALUE))
+                .addGap(0, 315, Short.MAX_VALUE))
         );
 
         mlibrarianPanel.setBackground(new java.awt.Color(240, 240, 239));
@@ -608,15 +660,15 @@ public class AdminWindow extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Source Sans Pro Light", 0, 24)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/40x40/id.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/40x40/settings3.png"))); // NOI18N
         jLabel3.setText("Manage Librarian");
 
         jLabel7.setText("Librarian StaffID");
         jLabel7.setMaximumSize(new java.awt.Dimension(150, 28));
         jLabel7.setMinimumSize(new java.awt.Dimension(80, 28));
 
-        searchStaffID.setMaximumSize(new java.awt.Dimension(150, 28));
-        searchStaffID.setMinimumSize(new java.awt.Dimension(100, 28));
+        searchStaffID.setMaximumSize(new java.awt.Dimension(150, 30));
+        searchStaffID.setMinimumSize(new java.awt.Dimension(100, 30));
         searchStaffID.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 searchStaffIDKeyReleased(evt);
@@ -717,16 +769,14 @@ public class AdminWindow extends javax.swing.JFrame {
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(mlibrarianNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(mlibrarianPanelLayout.createSequentialGroup()
-                                .addGroup(mlibrarianPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(mlibrarianPanelLayout.createSequentialGroup()
-                                        .addComponent(jSeparator3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jSeparator4))
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(497, 497, 497)))
+                            .addGroup(mlibrarianPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(mlibrarianPanelLayout.createSequentialGroup()
+                                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jSeparator4))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(10, 10, 10))))
         );
         mlibrarianPanelLayout.setVerticalGroup(
@@ -736,7 +786,7 @@ public class AdminWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mlibrarianPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchStaffID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchStaffID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mlibrarianSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mlibrarianMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -762,7 +812,7 @@ public class AdminWindow extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(sendNotification)
-                .addContainerGap(324, Short.MAX_VALUE))
+                .addContainerGap(263, Short.MAX_VALUE))
         );
 
         aminPanelConatainer.setLayer(alibrarianPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -913,7 +963,6 @@ public class AdminWindow extends javax.swing.JFrame {
         if(String.valueOf(this.SettingsOldPassword.getPassword()).equals(this.db.GetSessionValue("password"))){
             query = "staffID='"+staffID+"', name='"+Name+"', email='"+Email+"', phone='"+Phone+"'";
             if(Password.length() != 0 && Password.length() >= 4) query += ", password='"+Password+"'";
-            else query = "";
             
             if(query.length() != 0){
                 if(this.db.updateData("admin", query, "id=1") == 1){
@@ -925,9 +974,6 @@ public class AdminWindow extends javax.swing.JFrame {
                     this.SettingsMsg.setForeground(Color.red);
                     this.SettingsMsg.setText("Failed to save!");
                 }
-            } else{
-                this.SettingsMsg.setForeground(Color.red);
-                this.SettingsMsg.setText("password too short!");
             }
         } else{
             this.SettingsMsg.setForeground(Color.red);
@@ -1025,6 +1071,21 @@ public class AdminWindow extends javax.swing.JFrame {
         this.blockLibrarianButton.setEnabled(false);
     }//GEN-LAST:event_searchStaffIDKeyReleased
 
+    private void mlibrarianPanelSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mlibrarianPanelSearchButtonActionPerformed
+        String name = this.mlibrarianPanelSearchBox.getText();
+        if(name.length() != 0) resultTableRender("name LIKE '%"+name+"%'");
+    }//GEN-LAST:event_mlibrarianPanelSearchButtonActionPerformed
+
+    private void reloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadButtonActionPerformed
+        resultTableRender();
+    }//GEN-LAST:event_reloadButtonActionPerformed
+
+    private void mlibrarianPanelSearchBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mlibrarianPanelSearchBoxKeyReleased
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) this.mlibrarianPanelSearchButtonActionPerformed(null);
+        else if(evt.getKeyCode() == KeyEvent.VK_ESCAPE) resultTableRender();
+    }//GEN-LAST:event_mlibrarianPanelSearchBoxKeyReleased
+
+    
     private void resetForm(){
         this.staffid.setText("");
         this.name.setText("");
@@ -1097,6 +1158,7 @@ public class AdminWindow extends javax.swing.JFrame {
     private javax.swing.JTextArea notificationText;
     private javax.swing.JTextField password;
     private javax.swing.JTextField phone;
+    private javax.swing.JButton reloadButton;
     private javax.swing.JButton resetButton;
     private javax.swing.JTextField searchStaffID;
     private javax.swing.JButton sendNotification;

@@ -44,7 +44,7 @@ public class DataBase {
             
             ps = conn.prepareStatement("SELECT * FROM admin");
             if(!ps.executeQuery().next()){
-                ps = conn.prepareStatement("INSERT INTO admin (staffID, name, phone, email, password) VALUES('-', '-', '-', '-', '1234')");
+                ps = conn.prepareStatement("INSERT INTO admin (staffID, name, phone, email, password, onDate) VALUES(' ', ' ', ' ', ' ', '1234', null)");
                 ps.executeUpdate();
             }
 
@@ -70,7 +70,8 @@ public class DataBase {
                     + "p_address VARCHAR(250) NOT NULL,"
                     + "t_address VARCHAR(250) NOT NULL,"
                     + "addedBy VARCHAR(10) NOT NULL,"
-                    + "booksBorrowed VARCHAR(526) NOT NULL,"
+                    + "booksBorrowed VARCHAR(526),"
+                    + "isBlocked BOOLEAN DEFAULT false,"
                     + "onDate TIMESTAMP)");
             ps.executeUpdate();
 
@@ -78,9 +79,12 @@ public class DataBase {
                     + "id INT(15) UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
                     + "name VARCHAR(100) NOT NULL,"
                     + "auther_name VARCHAR(100) NOT NULL,"
+                    + "publication VARCHAR(100) NOT NULL,"
+                    + "storage_location VARCHAR(100),"
                     + "ISBN VARCHAR(50) NOT NULL,"
                     + "quantity INT(3) NOT NULL,"
                     + "status INT(3) NOT NULL,"
+                    + "priceSingle INT(4) NOT NULL,"
                     + "onDate TIMESTAMP)");
             ps.executeUpdate();
         } catch (SQLException ex) {

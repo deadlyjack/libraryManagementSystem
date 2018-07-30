@@ -212,7 +212,7 @@
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/assests/icons/16x16/settings2.png"/>
+                  <Image iconType="3" name="/assests/icons/16x16/settings3.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Manage librarian"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
@@ -352,7 +352,7 @@
                           <Component id="jSeparator2" min="-2" pref="3" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           <Component id="clearAll" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="373" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="365" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -514,23 +514,33 @@
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="librarianPanel">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ef" green="f0" red="f0" type="rgb"/>
+                </Property>
+              </Properties>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="mlibrarianPanelHeader" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="reloadButton" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="244" max="-2" attributes="0"/>
+                                  <Component id="mlibrarianPanelSearchBox" pref="326" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <Component id="mlibrarianPanelSearchButton" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="277" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="309" max="-2" attributes="0"/>
-                          <Component id="mlibrarianPanelSearchBox" pref="285" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="mlibrarianPanelSearchButton" min="-2" pref="34" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="277" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="mlibrarianPanelHeader" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -539,11 +549,12 @@
                           <Component id="mlibrarianPanelHeader" min="-2" pref="92" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="mlibrarianPanelSearchBox" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                              <Component id="mlibrarianPanelSearchButton" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="mlibrarianPanelSearchBox" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="mlibrarianPanelSearchButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="reloadButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="537" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="532" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -565,10 +576,22 @@
                 <Component class="javax.swing.JTextField" name="mlibrarianPanelSearchBox">
                   <Properties>
                     <Property name="toolTipText" type="java.lang.String" value="Enter librarian ID"/>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[600, 30]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[200, 30]"/>
+                    </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="mlibrarianPanelSearchBoxKeyReleased"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="mlibrarianPanelSearchButton">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ef" green="f0" red="f0" type="rgb"/>
+                    </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/assests/icons/16x16/search.png"/>
                     </Property>
@@ -576,9 +599,20 @@
                       <Border info="null"/>
                     </Property>
                     <Property name="borderPainted" type="boolean" value="false"/>
-                    <Property name="contentAreaFilled" type="boolean" value="false"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Hand Cursor"/>
+                    </Property>
                     <Property name="focusPainted" type="boolean" value="false"/>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[30, 30]"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[30, 30]"/>
+                    </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mlibrarianPanelSearchButtonActionPerformed"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane1">
                   <AuxValues>
@@ -639,6 +673,24 @@
                     </Component>
                   </SubComponents>
                 </Container>
+                <Component class="javax.swing.JButton" name="reloadButton">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ef" green="f0" red="f0" type="rgb"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/assests/icons/16x16/reload.png"/>
+                    </Property>
+                    <Property name="borderPainted" type="boolean" value="false"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Hand Cursor"/>
+                    </Property>
+                    <Property name="focusPainted" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reloadButtonActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="settingsPanel">
@@ -718,7 +770,7 @@
                               <Component id="SettingsSaveButton" max="32767" attributes="0"/>
                               <Component id="SettingsMsg" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="323" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="315" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -949,18 +1001,15 @@
                                               <Component id="mlibrarianNameLabel" min="-2" pref="300" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <Component id="jSeparator3" max="32767" attributes="0"/>
-                                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel10" min="-2" pref="121" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jSeparator4" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Component id="jScrollPane2" min="-2" pref="406" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="jSeparator3" min="-2" pref="100" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                              <Component id="jLabel10" min="-2" pref="177" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jSeparator4" max="32767" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="497" pref="497" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane2" min="-2" pref="406" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -976,7 +1025,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" max="-2" attributes="0">
                               <Component id="jLabel7" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                              <Component id="searchStaffID" alignment="3" max="32767" attributes="0"/>
+                              <Component id="searchStaffID" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="mlibrarianSearchButton" alignment="3" max="32767" attributes="0"/>
                               <Component id="mlibrarianMsg" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
@@ -1007,7 +1056,7 @@
                           <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="sendNotification" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="324" max="32767" attributes="0"/>
+                          <EmptySpace pref="263" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1020,7 +1069,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/assests/icons/40x40/id.png"/>
+                      <Image iconType="3" name="/assests/icons/40x40/settings3.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Manage Librarian"/>
                   </Properties>
@@ -1039,10 +1088,10 @@
                 <Component class="javax.swing.JTextField" name="searchStaffID">
                   <Properties>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[150, 28]"/>
+                      <Dimension value="[150, 30]"/>
                     </Property>
                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[100, 28]"/>
+                      <Dimension value="[100, 30]"/>
                     </Property>
                   </Properties>
                   <Events>

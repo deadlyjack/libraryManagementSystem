@@ -12,9 +12,9 @@ import javax.swing.ImageIcon;
  * @author delle
  */
 public class Main {
-    public static  Login adminLogin = new Login();
     public static void main(String[] args){
-        ImageIcon icon = new ImageIcon("D:\\projects\\java_projects\\LibraryManagemant\\src\\assests\\icon.png");
+        Login adminLogin = new Login();
+        ImageIcon icon = new ImageIcon(System.getProperty("user.dir")+"/src/assests/icon.png");
         SplashScreen splash = new SplashScreen();
         splash.setIconImage(icon.getImage());
         splash.setVisible(true);
