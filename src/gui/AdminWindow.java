@@ -35,18 +35,10 @@ public class AdminWindow extends javax.swing.JFrame {
         this.SettingsPhone.setText(this.db.GetSessionValue("phone"));
         this.SettingsEmail.setText(this.db.GetSessionValue("email"));
         
-        if(!this.db.GetSessionValue("name").equals(" ")){
+        if(!this.db.GetSessionValue("name").equals("")){
             this.SettingsName.setEditable(false);
             this.SettingsStaffID.setEditable(false);
         }
-        if(this.db.GetSessionValue("name").equals(" "))
-            this.SettingsName.setText("");
-        if(this.db.GetSessionValue("staffID").equals(" "))
-            this.SettingsStaffID.setText("");
-        if(this.db.GetSessionValue("email").equals(" "))
-            this.SettingsEmail.setText("");
-        if(this.db.GetSessionValue("phone").equals(" "))
-            this.SettingsPhone.setText("");
             
         resultTableRender();
     }
@@ -100,7 +92,7 @@ public class AdminWindow extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         password = new javax.swing.JTextField();
         email = new javax.swing.JTextField();
-        msg = new javax.swing.JLabel();
+        alibrarianMsg = new javax.swing.JLabel();
         clearAll = new javax.swing.JCheckBox();
         jSeparator2 = new javax.swing.JSeparator();
         librarianPanel = new javax.swing.JPanel();
@@ -345,7 +337,7 @@ public class AdminWindow extends javax.swing.JFrame {
         email.setMaximumSize(new java.awt.Dimension(600, 25));
         email.setMinimumSize(new java.awt.Dimension(300, 25));
 
-        msg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        alibrarianMsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         clearAll.setText("Clear all feilds after adding librarian");
 
@@ -360,7 +352,7 @@ public class AdminWindow extends javax.swing.JFrame {
                     .addComponent(jSeparator2)
                     .addComponent(clearAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(alibrarianPanelLayout.createSequentialGroup()
-                        .addComponent(msg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(alibrarianMsg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -410,7 +402,7 @@ public class AdminWindow extends javax.swing.JFrame {
                     .addGroup(alibrarianPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(addButton)
                         .addComponent(resetButton))
-                    .addComponent(msg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(alibrarianMsg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(4, 4, 4)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
@@ -915,21 +907,51 @@ public class AdminWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_alibrarianActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        String staffIdValue, nameValue, phoneValue, emailValue, passwordValue;
-        staffIdValue = this.staffid.getText();
-        nameValue = this.name.getText();
-        phoneValue = this.phone.getText();
-        emailValue = this.email.getText();
-        passwordValue = this.password.getText();
-        int r = db.insertData("librarian", "(staffID, name, phone, email, password, addedBy) VALUES('"+staffIdValue+"','"+nameValue+"','"+phoneValue+"','"+emailValue+"','"+passwordValue+"', '"+this.db.GetSessionValue("name")+"')");
-        if(r != 0){
-            this.msg.setForeground(Color.green);
-            this.msg.setText("new librarian added");
-            if(this.clearAll.isSelected()) resetForm();
-            resultTableRender();
+
+        if(!this.db.GetSessionValue("staffID").isEmpty()){
+            String staffIdValue, nameValue, phoneValue, emailValue, passwordValue;
+            staffIdValue = this.staffid.getText();
+            nameValue = this.name.getText();
+            phoneValue = this.phone.getText();
+            emailValue = this.email.getText();
+            passwordValue = this.password.getText();
+            
+            if(staffIdValue.isEmpty() || nameValue.isEmpty() || phoneValue.isEmpty() || emailValue.isEmpty() || passwordValue.isEmpty()){
+                this.alibrarianMsg.setForeground(Color.red);
+                this.alibrarianMsg.setText("Fill empty fields");
+                return;
+            }
+            
+            if(!emailValue.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+                this.alibrarianMsg.setForeground(Color.red);
+                this.alibrarianMsg.setText("Email is not valid");
+                return;
+            }
+
+            if(!phoneValue.matches("^[6-9]\\d{9}$")){
+                this.alibrarianMsg.setForeground(Color.red);
+                this.alibrarianMsg.setText("Phone is not valid");
+                return;
+            }
+            
+            if(staffIdValue.isEmpty() || nameValue.isEmpty() || phoneValue.isEmpty() || emailValue.isEmpty() || passwordValue.isEmpty()){
+                this.alibrarianMsg.setForeground(Color.red);
+                this.alibrarianMsg.setText("Fill all details");
+                return;
+            }
+            int r = db.insertData("librarian", "(staffID, name, phone, email, password, addedBy, onDate) VALUES('"+staffIdValue+"','"+nameValue+"','"+phoneValue+"','"+emailValue+"','"+passwordValue+"', '"+this.db.GetSessionValue("name")+"', CURRENT_TIMESTAMP)");
+            if(r != 0){
+                this.alibrarianMsg.setForeground(Color.green);
+                this.alibrarianMsg.setText("new librarian added");
+                if(this.clearAll.isSelected()) resetForm();
+                resultTableRender();
+            }else{
+                this.alibrarianMsg.setForeground(Color.red);
+                this.alibrarianMsg.setText("failed to add new librarian");
+            }
         }else{
-            this.msg.setForeground(Color.red);
-            this.msg.setText("failed to add new librarian");
+            this.alibrarianMsg.setForeground(Color.red);
+            this.alibrarianMsg.setText("Please save your staffID and name in settings.");
         }
     }//GEN-LAST:event_addButtonActionPerformed
 
@@ -960,6 +982,18 @@ public class AdminWindow extends javax.swing.JFrame {
         Phone = this.SettingsPhone.getText();
         Password = this.SettingsPassword.getText();
         
+        if(!Email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+            this.SettingsMsg.setForeground(Color.red);
+            this.SettingsMsg.setText("Email is not valid");
+            return;
+        }
+
+        if(!Phone.matches("^[6-9]\\d{9}$")){
+            this.SettingsMsg.setForeground(Color.red);
+            this.SettingsMsg.setText("Phone is not valid");
+            return;
+        }
+        
         if(String.valueOf(this.SettingsOldPassword.getPassword()).equals(this.db.GetSessionValue("password"))){
             query = "staffID='"+staffID+"', name='"+Name+"', email='"+Email+"', phone='"+Phone+"'";
             if(Password.length() != 0 && Password.length() >= 4) query += ", password='"+Password+"'";
@@ -967,8 +1001,13 @@ public class AdminWindow extends javax.swing.JFrame {
             if(query.length() != 0){
                 if(this.db.updateData("admin", query, "id=1") == 1){
                     this.SettingsMsg.setText("Settings Saved");
-                    ResultSet rs = this.db.getValueWhere("admin", "*", "staffID='"+staffID+"'");
-                    this.db.SessionStart(rs);
+                    ResultSet rs = this.db.getValueWhere("admin", "staffID='"+staffID+"'");
+                    try {
+                        if(rs.next())
+                            this.db.SessionStart(rs);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AdminWindow.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 else{
                     this.SettingsMsg.setForeground(Color.red);
@@ -986,7 +1025,7 @@ public class AdminWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void alibrarianPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alibrarianPanelMouseEntered
-        this.msg.setText("");
+        this.alibrarianMsg.setText("");
     }//GEN-LAST:event_alibrarianPanelMouseEntered
 
     private void mlibrarianMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mlibrarianMouseEntered
@@ -1012,7 +1051,7 @@ public class AdminWindow extends javax.swing.JFrame {
         String sid = this.searchStaffID.getText();
         if(sid.length() != 0){
             try {
-                ResultSet rs = this.db.getValueWhere("librarian", "*", "staffID='"+sid+"'");
+                ResultSet rs = this.db.getValueWhere("librarian", "staffID='"+sid+"'");
                 if(rs.next()){
                     this.mlibrarianNameLabel.setText(rs.getString("name"));
                     this.mlibrarianEmilLabel.setText(rs.getString("email"));
@@ -1045,13 +1084,27 @@ public class AdminWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_mlibrarianPanelMouseEntered
 
     private void blockLibrarianButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockLibrarianButtonActionPerformed
-        if(this.db.updateData("librarian", "isBlocked=true", "staffID='"+this.searchStaffID.getText()+"'") != 0){
-            this.mlibrarianMsg.setForeground(Color.green);
-            this.mlibrarianMsg.setText("Librarian blocked!");
-            resultTableRender();
+        String sid = this.searchStaffID.getText();
+        if(this.db.getValueWhere("librarian", "isBlocked", "staffID='"+sid+"'").equals("1")){
+            if(this.db.updateData("librarian", "isBlocked=false", "staffID='"+sid+"'") != 0){
+                this.mlibrarianMsg.setForeground(Color.green);
+                this.mlibrarianMsg.setText("Librarian unblocked!");
+                this.blockLibrarianButton.setText("block");
+                resultTableRender();
+            }else{
+                this.mlibrarianMsg.setForeground(Color.red);
+                this.mlibrarianMsg.setText("Failed to block librarian!");
+            }
         }else{
-            this.mlibrarianMsg.setForeground(Color.red);
-            this.mlibrarianMsg.setText("Failed to block librarian!");
+            if(this.db.updateData("librarian", "isBlocked=true", "staffID='"+sid+"'") != 0){
+                this.mlibrarianMsg.setForeground(Color.green);
+                this.mlibrarianMsg.setText("Librarian blocked!");
+                this.blockLibrarianButton.setText("unlock");
+                resultTableRender();
+            }else{
+                this.mlibrarianMsg.setForeground(Color.red);
+                this.mlibrarianMsg.setText("Failed to block librarian!");
+            }
         }
     }//GEN-LAST:event_blockLibrarianButtonActionPerformed
 
@@ -1069,6 +1122,7 @@ public class AdminWindow extends javax.swing.JFrame {
         this.delteLibrarianButton.setEnabled(false);
         this.sendNotification.setEnabled(false);
         this.blockLibrarianButton.setEnabled(false);
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) this.mlibrarianSearchButtonActionPerformed(null);
     }//GEN-LAST:event_searchStaffIDKeyReleased
 
     private void mlibrarianPanelSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mlibrarianPanelSearchButtonActionPerformed
@@ -1118,6 +1172,7 @@ public class AdminWindow extends javax.swing.JFrame {
     private javax.swing.JPanel adminPanelSidebar;
     private javax.swing.JPanel adminPanelSidebarHeader;
     private javax.swing.JButton alibrarian;
+    private javax.swing.JLabel alibrarianMsg;
     private javax.swing.JPanel alibrarianPanel;
     private javax.swing.JLabel alibrrianPanelHeader;
     private javax.swing.JLayeredPane aminPanelConatainer;
@@ -1153,7 +1208,6 @@ public class AdminWindow extends javax.swing.JFrame {
     private javax.swing.JTextField mlibrarianPanelSearchBox;
     private javax.swing.JButton mlibrarianPanelSearchButton;
     private javax.swing.JButton mlibrarianSearchButton;
-    private javax.swing.JLabel msg;
     private javax.swing.JTextField name;
     private javax.swing.JTextArea notificationText;
     private javax.swing.JTextField password;

@@ -544,19 +544,16 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jScrollPane5" alignment="0" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="bookPanelHeader" alignment="0" max="32767" attributes="0"/>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="reloadButton1" min="-2" pref="30" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="185" max="-2" attributes="0"/>
-                                                  <Component id="searchBook" pref="375" max="32767" attributes="0"/>
-                                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                                  <Component id="searchBookButton" min="-2" pref="30" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="197" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                          <Component id="reloadButton1" min="-2" pref="30" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
+                                          <Component id="searchFor" min="-2" pref="173" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="searchBook" pref="385" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                          <Component id="searchBookButton" min="-2" pref="30" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="197" max="-2" attributes="0"/>
                                       </Group>
+                                      <Component id="bookPanelHeader" alignment="1" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -565,14 +562,14 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="bookPanelHeader" min="-2" pref="76" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="reloadButton1" alignment="0" pref="30" max="32767" attributes="0"/>
                                       <Component id="searchBook" alignment="0" max="32767" attributes="0"/>
                                       <Component id="searchBookButton" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="reloadButton1" alignment="0" pref="30" max="32767" attributes="0"/>
+                                      <Component id="searchFor" alignment="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane5" pref="429" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane5" pref="414" max="32767" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -640,17 +637,23 @@
                             <Component class="javax.swing.JTable" name="booksSearchResult">
                               <Properties>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                  <Table columnCount="6" rowCount="0">
+                                  <Table columnCount="7" rowCount="0">
                                     <Column editable="true" title="ID" type="java.lang.String"/>
                                     <Column editable="true" title="Book Title" type="java.lang.String"/>
-                                    <Column editable="true" title="ISBN" type="java.lang.String"/>
+                                    <Column editable="true" title="Publication" type="java.lang.String"/>
                                     <Column editable="true" title="Author" type="java.lang.String"/>
+                                    <Column editable="true" title="ISBN" type="java.lang.String"/>
                                     <Column editable="true" title="Available" type="java.lang.String"/>
                                     <Column editable="true" title="Total Quantity" type="java.lang.String"/>
                                   </Table>
                                 </Property>
                                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                                   <TableColumnModel selectionModel="0">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
                                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                       <Title/>
                                       <Editor/>
@@ -704,6 +707,28 @@
                             </Property>
                             <Property name="focusPainted" type="boolean" value="false"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reloadButton1ActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JComboBox" name="searchFor">
+                          <Properties>
+                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="f0" green="f0" red="f0" type="rgb"/>
+                            </Property>
+                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                              <StringArray count="5">
+                                <StringItem index="0" value="title"/>
+                                <StringItem index="1" value="isbn"/>
+                                <StringItem index="2" value="author"/>
+                                <StringItem index="3" value="publication"/>
+                                <StringItem index="4" value="id"/>
+                              </StringArray>
+                            </Property>
+                          </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -730,7 +755,7 @@
                                           <EmptySpace min="-2" max="-2" attributes="0"/>
                                           <Component id="abookResetButton" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="abookAuther" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="abookAuthor" alignment="0" max="32767" attributes="0"/>
                                       <Component id="abookPublication" alignment="0" max="32767" attributes="0"/>
                                       <Component id="abookISBN" alignment="0" max="32767" attributes="0"/>
                                       <Component id="abookTitle" alignment="0" max="32767" attributes="0"/>
@@ -769,7 +794,7 @@
                                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="amemberEmailLabel1" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
-                                      <Component id="abookAuther" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
+                                      <Component id="abookAuthor" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -835,6 +860,9 @@
                             <Property name="text" type="java.lang.String" value="Reset"/>
                             <Property name="focusPainted" type="boolean" value="false"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="abookResetButtonActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JTextField" name="abookPublication">
                           <Properties>
@@ -867,7 +895,7 @@
                             <Property name="text" type="java.lang.String" value="Author Name"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="abookAuther">
+                        <Component class="javax.swing.JTextField" name="abookAuthor">
                           <Properties>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[600, 24]"/>
@@ -876,7 +904,7 @@
                         </Component>
                         <Component class="javax.swing.JLabel" name="amemberEmailLabel2">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Quatity"/>
+                            <Property name="text" type="java.lang.String" value="Quantity"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JTextField" name="abookQuatity">
@@ -1029,6 +1057,9 @@
                               <Dimension value="[600, 24]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ibookMemberIDKeyReleased"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="amemberIDNumberLable2">
                           <Properties>
@@ -1037,10 +1068,14 @@
                         </Component>
                         <Component class="javax.swing.JTextField" name="ibookBookID">
                           <Properties>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[600, 24]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ibookBookIDKeyReleased"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="ibook_msg">
                         </Component>
@@ -1065,6 +1100,9 @@
                             <Property name="text" type="java.lang.String" value="Reset"/>
                             <Property name="focusPainted" type="boolean" value="false"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ibookResetButtonActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="ibookMemberAddress">
                         </Component>
@@ -1082,7 +1120,7 @@
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/assests/icons/16x16/id.png"/>
+                              <Image iconType="3" name="/assests/icons/16x16/user.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Member Details"/>
                           </Properties>
@@ -1129,11 +1167,11 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="1" attributes="0">
                                               <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="rbook_msg" pref="452" max="32767" attributes="0"/>
+                                                  <Component id="rbook_msg" pref="429" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="ibookButton1" min="-2" pref="74" max="-2" attributes="0"/>
+                                                  <Component id="rbookButton" min="-2" pref="97" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="ibookResetButton1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="rbookResetButton" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Component id="rbookBookID" alignment="0" max="32767" attributes="0"/>
                                               <Component id="rbookMemberID" alignment="0" max="32767" attributes="0"/>
@@ -1180,8 +1218,8 @@
                                   </Group>
                                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="ibookResetButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="ibookButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rbookResetButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rbookButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="rbook_msg" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1238,6 +1276,9 @@
                               <Dimension value="[600, 24]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="rbookMemberIDKeyReleased"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="amemberIDNumberLable3">
                           <Properties>
@@ -1246,26 +1287,34 @@
                         </Component>
                         <Component class="javax.swing.JTextField" name="rbookBookID">
                           <Properties>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[600, 24]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="rbookBookIDKeyReleased"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="rbook_msg">
                         </Component>
-                        <Component class="javax.swing.JButton" name="ibookButton1">
+                        <Component class="javax.swing.JButton" name="rbookButton">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ef" green="f0" red="f0" type="rgb"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Receive"/>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="focusPainted" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[100, 22]"/>
+                            </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ibookButton1ActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbookButtonActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="ibookResetButton1">
+                        <Component class="javax.swing.JButton" name="rbookResetButton">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ef" green="f0" red="f0" type="rgb"/>
@@ -1273,6 +1322,9 @@
                             <Property name="text" type="java.lang.String" value="Reset"/>
                             <Property name="focusPainted" type="boolean" value="false"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbookResetButtonActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JSeparator" name="jSeparator2">
                         </Component>
@@ -1283,7 +1335,7 @@
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/assests/icons/16x16/id.png"/>
+                              <Image iconType="3" name="/assests/icons/16x16/user.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Member Details"/>
                           </Properties>
@@ -1335,7 +1387,7 @@
                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                           <Component id="mbookSearchButton" min="-2" pref="30" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="mmemberMsg1" min="-2" pref="615" max="-2" attributes="0"/>
+                                          <Component id="mbook_msg" min="-2" pref="615" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                           <Group type="102" alignment="1" attributes="0">
@@ -1374,7 +1426,7 @@
                                       <Component id="jLabel24" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                                       <Component id="mbookSearchBook" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="mbookSearchButton" alignment="3" max="32767" attributes="0"/>
-                                      <Component id="mmemberMsg1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="mbook_msg" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jSeparator6" min="-2" pref="10" max="-2" attributes="0"/>
@@ -1454,7 +1506,7 @@
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JLabel" name="mmemberMsg1">
+                        <Component class="javax.swing.JLabel" name="mbook_msg">
                         </Component>
                         <Component class="javax.swing.JLabel" name="mbookISBN">
                           <Properties>
@@ -2127,6 +2179,9 @@
                             <Property name="text" type="java.lang.String" value="Reset"/>
                             <Property name="focusPainted" type="boolean" value="false"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetButtonActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="addButton">
                           <Properties>
@@ -2177,7 +2232,7 @@
                                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                                                   <Component id="searchMember" min="-2" pref="150" max="-2" attributes="0"/>
                                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                                  <Component id="mlibrarianSearchButton" min="-2" pref="30" max="-2" attributes="0"/>
+                                                  <Component id="mmemberSearchButton" min="-2" pref="30" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="mmemberMsg" min="-2" pref="615" max="-2" attributes="0"/>
                                               </Group>
@@ -2235,7 +2290,7 @@
                                   <Group type="103" groupAlignment="3" max="-2" attributes="0">
                                       <Component id="jLabel7" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                                       <Component id="searchMember" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="mlibrarianSearchButton" alignment="3" max="32767" attributes="0"/>
+                                      <Component id="mmemberSearchButton" alignment="3" max="32767" attributes="0"/>
                                       <Component id="mmemberMsg" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -2331,7 +2386,7 @@
                             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="searchMemberKeyReleased"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="mlibrarianSearchButton">
+                        <Component class="javax.swing.JButton" name="mmemberSearchButton">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ef" green="f0" red="f0" type="rgb"/>
@@ -2349,7 +2404,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mlibrarianSearchButtonActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mmemberSearchButtonActionPerformed"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JSeparator" name="jSeparator1">

@@ -283,7 +283,7 @@
                               <Component id="jSeparator2" max="32767" attributes="0"/>
                               <Component id="clearAll" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="msg" max="32767" attributes="0"/>
+                                  <Component id="alibrarianMsg" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="resetButton" min="-2" pref="83" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -346,7 +346,7 @@
                                   <Component id="addButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="resetButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="msg" max="32767" attributes="0"/>
+                              <Component id="alibrarianMsg" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                           <Component id="jSeparator2" min="-2" pref="3" max="-2" attributes="0"/>
@@ -499,7 +499,7 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="msg">
+                <Component class="javax.swing.JLabel" name="alibrarianMsg">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                   </Properties>

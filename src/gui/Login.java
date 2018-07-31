@@ -216,20 +216,24 @@ public class Login extends javax.swing.JFrame {
         String passwordValue = String.valueOf(this.password.getPassword());
         if(librarian.isSelected()){
             try {
-                rs = this.db.getValueWhere("librarian", "*", "staffID='"+staffId+"' AND password='"+passwordValue+"'");
+                rs = this.db.getValueWhere("librarian", "staffID='"+staffId+"' AND password='"+passwordValue+"'");
                 if(rs.next()){
-                    mainWindow.GetSession(rs);
-                    mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                    mainWindow.setIconImage(this.icon.getImage());
-                    mainWindow.setVisible(true);
-                    this.setVisible(false);
+                    if(rs.getString("isBlocked").equals("1")){
+                        this.error_msg.setText("You have been blocked by administrator!");
+                    }else{
+                        mainWindow.GetSession(rs);
+                        mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                        mainWindow.setIconImage(this.icon.getImage());
+                        mainWindow.setVisible(true);
+                        this.setVisible(false);
+                    }
                 }else this.error_msg.setText("incorrect password!");
             } catch (SQLException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
             try {
-                rs = this.db.getValueWhere("admin", "*", "id=1 AND password='"+passwordValue+"'");
+                rs = this.db.getValueWhere("admin", "id=1 AND password='"+passwordValue+"'");
                 if(rs.next()){
                     adminWindow.GetSession(rs);
                     adminWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);

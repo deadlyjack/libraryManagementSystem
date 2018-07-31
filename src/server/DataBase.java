@@ -22,7 +22,7 @@ public class DataBase {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/?useSSL=false", "root", "");
             Statement stmnt = conn.createStatement();
-            int r = stmnt.executeUpdate("CREATE DATABASE IF NOT EXISTS libmans");        
+            int r = stmnt.executeUpdate("CREATE DATABASE IF NOT EXISTS libmans_v1");        
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -31,20 +31,20 @@ public class DataBase {
     public void OpenConnection(){
         this.InitDatabase();
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/libmans?useSSL=false", "root", "");       
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/libmans_v1?useSSL=false", "root", "");       
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS admin("
                     + "id INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
-                    + "staffID VARCHAR(12) NOT NULL,"
-                    + "name VARCHAR(100) NOT NULL,"
-                    + "phone VARCHAR(13) NOT NULL,"
-                    + "email VARCHAR(150) NOT NULL,"
+                    + "staffID VARCHAR(12),"
+                    + "name VARCHAR(100),"
+                    + "phone VARCHAR(13),"
+                    + "email VARCHAR(150),"
                     + "password VARCHAR(250) NOT NULL,"
-                    + "onDate TIMESTAMP)");
+                    + "onDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
             ps.executeUpdate();
             
             ps = conn.prepareStatement("SELECT * FROM admin");
             if(!ps.executeQuery().next()){
-                ps = conn.prepareStatement("INSERT INTO admin (staffID, name, phone, email, password, onDate) VALUES(' ', ' ', ' ', ' ', '1234', null)");
+                ps = conn.prepareStatement("INSERT INTO admin (password, onDate) VALUES('1234', CURRENT_TIMESTAMP)");
                 ps.executeUpdate();
             }
 
@@ -78,13 +78,13 @@ public class DataBase {
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS books("
                     + "id INT(15) UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
                     + "name VARCHAR(100) NOT NULL,"
-                    + "auther_name VARCHAR(100) NOT NULL,"
+                    + "author_name VARCHAR(100) NOT NULL,"
                     + "publication VARCHAR(100) NOT NULL,"
                     + "storage_location VARCHAR(100),"
                     + "ISBN VARCHAR(50) NOT NULL,"
                     + "quantity INT(3) NOT NULL,"
                     + "status INT(3) NOT NULL,"
-                    + "priceSingle INT(4) NOT NULL,"
+                    + "price INT(4) NOT NULL,"
                     + "onDate TIMESTAMP)");
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -92,14 +92,44 @@ public class DataBase {
         }
     }
     
-    public ResultSet getValueWhere(String table, String query, String condition){
+    public ResultSet getValueWhere(String table, String condition){
         try {
-            ps = conn.prepareStatement("SELECT "+query+" FROM "+table+" WHERE "+condition);
+            ps = conn.prepareStatement("SELECT * FROM "+table+" WHERE "+condition);
             return ps.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public String getValueWhere(String table, String query, String condition){
+        try {
+            ps = conn.prepareStatement("SELECT * FROM "+table+" WHERE "+condition);
+            ResultSet thisrs = ps.executeQuery();
+            if(thisrs.next()){
+                String result = thisrs.getString(query);
+                if(thisrs.wasNull()) return "";
+                return result;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
+    }
+
+    public int getIntValueWhere(String table, String query, String condition){
+        try {
+            ps = conn.prepareStatement("SELECT * FROM "+table+" WHERE "+condition);
+            ResultSet thisrs = ps.executeQuery();
+            if(thisrs.next()){
+                int result = thisrs.getInt(query);
+                if(thisrs.wasNull()) return 0;
+                return result;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
     public ResultSet getRows(String table, String condition){
@@ -158,10 +188,25 @@ public class DataBase {
     
     public String GetSessionValue(String str){
         try {
-            return this.rs.getString(str);
+            String result = this.rs.getString(str);
+            if(this.rs.wasNull()) return "";
+            else return result;
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return "";
+    }
+
+    public int GetSessionValue(String str, String option){
+        try {
+            if(option.equals("int")){
+                int result = this.rs.getInt(str);
+                if(this.rs.wasNull()) return 0;
+                else return result;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }

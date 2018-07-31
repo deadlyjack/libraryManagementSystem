@@ -1,9 +1,12 @@
 package gui;
 
-import com.sun.glass.events.KeyEvent;
+import java.awt.event.KeyEvent;
 import java.awt.Color;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -29,8 +32,8 @@ public class MainWindow extends javax.swing.JFrame {
         ContainerVisiblity(false);
         PanelVisiblity(false);
         this.booksContanerPanel.setVisible(true);
-//        DefaultTableModel booksTable = (DefaultTableModel) this.memberSearchResult.getModel();
         memberTableRender(this.db.getRows("member"));
+        bookTableRender(this.db.getRows("books"));
     }
     
     private void memberTableRender(ResultSet rs){
@@ -38,7 +41,21 @@ public class MainWindow extends javax.swing.JFrame {
         resultTable.setRowCount(0);
         try {
             while(rs.next()){
-                resultTable.addRow(new Object[]{rs.getString("memberID"), rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("t_address"), rs.getString("booksBorrowed")});
+                String bb = rs.getString("booksBorrowed");
+                if(rs.wasNull()) bb = "";
+                resultTable.addRow(new Object[]{rs.getString("memberID"), rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("t_address"), this.bookIdToName(bb)});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void bookTableRender(ResultSet rs){
+        DefaultTableModel resultTable = (DefaultTableModel) this.booksSearchResult.getModel();
+        resultTable.setRowCount(0);
+        try {
+            while(rs.next()){
+                resultTable.addRow(new Object[]{rs.getString("id"), rs.getString("name"), rs.getString("publication"), rs.getString("author_name"), rs.getString("ISBN"), rs.getString("status"), rs.getString("quantity")});
             }
         } catch (SQLException ex) {
             Logger.getLogger(AdminWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,7 +70,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.mbookPanel.setVisible(bool);
         this.amemberPanel.setVisible(bool);
         this.mmemberPanel.setVisible(bool);
-        this.membersContainerPanel.setVisible(bool);
+        this.searchMemberPanel.setVisible(bool);
     }
     
     private void ContainerVisiblity(Boolean bool){
@@ -92,6 +109,7 @@ public class MainWindow extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         booksSearchResult = new javax.swing.JTable();
         reloadButton1 = new javax.swing.JButton();
+        searchFor = new javax.swing.JComboBox<>();
         abookPanel = new javax.swing.JPanel();
         abooPanelTitle = new javax.swing.JLabel();
         amemberNameLabel1 = new javax.swing.JLabel();
@@ -104,7 +122,7 @@ public class MainWindow extends javax.swing.JFrame {
         amemberPhoneNumberLabel1 = new javax.swing.JLabel();
         abook_msg = new javax.swing.JLabel();
         amemberEmailLabel1 = new javax.swing.JLabel();
-        abookAuther = new javax.swing.JTextField();
+        abookAuthor = new javax.swing.JTextField();
         amemberEmailLabel2 = new javax.swing.JLabel();
         abookQuatity = new javax.swing.JTextField();
         abookPrice = new javax.swing.JTextField();
@@ -135,8 +153,8 @@ public class MainWindow extends javax.swing.JFrame {
         amemberIDNumberLable3 = new javax.swing.JLabel();
         rbookBookID = new javax.swing.JTextField();
         rbook_msg = new javax.swing.JLabel();
-        ibookButton1 = new javax.swing.JButton();
-        ibookResetButton1 = new javax.swing.JButton();
+        rbookButton = new javax.swing.JButton();
+        rbookResetButton = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         rbookMemberDetails = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -153,7 +171,7 @@ public class MainWindow extends javax.swing.JFrame {
         jSeparator6 = new javax.swing.JSeparator();
         jLabel19 = new javax.swing.JLabel();
         mbookTitle = new javax.swing.JLabel();
-        mmemberMsg1 = new javax.swing.JLabel();
+        mbook_msg = new javax.swing.JLabel();
         mbookISBN = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -201,7 +219,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         searchMember = new javax.swing.JTextField();
-        mlibrarianSearchButton = new javax.swing.JButton();
+        mmemberSearchButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
         mmemberName = new javax.swing.JLabel();
@@ -556,11 +574,11 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Book Title", "ISBN", "Author", "Available", "Total Quantity"
+                "ID", "Book Title", "Publication", "Author", "ISBN", "Available", "Total Quantity"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -574,6 +592,14 @@ public class MainWindow extends javax.swing.JFrame {
         reloadButton1.setBorderPainted(false);
         reloadButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reloadButton1.setFocusPainted(false);
+        reloadButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reloadButton1ActionPerformed(evt);
+            }
+        });
+
+        searchFor.setBackground(new java.awt.Color(240, 240, 240));
+        searchFor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "title", "isbn", "author", "publication", "id" }));
 
         javax.swing.GroupLayout searchBooksPanelLayout = new javax.swing.GroupLayout(searchBooksPanel);
         searchBooksPanel.setLayout(searchBooksPanelLayout);
@@ -584,28 +610,27 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(searchBooksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5)
                     .addGroup(searchBooksPanelLayout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addGroup(searchBooksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bookPanelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(searchBooksPanelLayout.createSequentialGroup()
-                                .addComponent(reloadButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(185, 185, 185)
-                                .addComponent(searchBook, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                .addGap(0, 0, 0)
-                                .addComponent(searchBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(197, 197, 197))))))
+                        .addComponent(reloadButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(102, 102, 102)
+                        .addComponent(searchFor, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchBook, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+                        .addGap(0, 0, 0)
+                        .addComponent(searchBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(197, 197, 197))
+                    .addComponent(bookPanelHeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         searchBooksPanelLayout.setVerticalGroup(
             searchBooksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchBooksPanelLayout.createSequentialGroup()
                 .addComponent(bookPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
                 .addGroup(searchBooksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(reloadButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(searchBook, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchBookButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                    .addComponent(searchBookButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(reloadButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(searchFor))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -626,6 +651,11 @@ public class MainWindow extends javax.swing.JFrame {
         abookResetButton.setBackground(new java.awt.Color(240, 240, 239));
         abookResetButton.setText("Reset");
         abookResetButton.setFocusPainted(false);
+        abookResetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abookResetButtonActionPerformed(evt);
+            }
+        });
 
         abookPublication.setMaximumSize(new java.awt.Dimension(600, 24));
 
@@ -642,9 +672,9 @@ public class MainWindow extends javax.swing.JFrame {
 
         amemberEmailLabel1.setText("Author Name");
 
-        abookAuther.setMaximumSize(new java.awt.Dimension(600, 24));
+        abookAuthor.setMaximumSize(new java.awt.Dimension(600, 24));
 
-        amemberEmailLabel2.setText("Quatity");
+        amemberEmailLabel2.setText("Quantity");
 
         abookQuatity.setMaximumSize(new java.awt.Dimension(600, 24));
 
@@ -673,7 +703,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(abookAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(abookResetButton))
-                    .addComponent(abookAuther, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(abookAuthor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(abookPublication, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(abookISBN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(abookTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -705,7 +735,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(abookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(amemberEmailLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(abookAuther, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(abookAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(abookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(amemberEmailLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -729,10 +759,21 @@ public class MainWindow extends javax.swing.JFrame {
         amemberNameLabel2.setText("Member ID");
 
         ibookMemberID.setMaximumSize(new java.awt.Dimension(600, 24));
+        ibookMemberID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ibookMemberIDKeyReleased(evt);
+            }
+        });
 
         amemberIDNumberLable2.setText("Book(s) ID");
 
+        ibookBookID.setEnabled(false);
         ibookBookID.setMaximumSize(new java.awt.Dimension(600, 24));
+        ibookBookID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ibookBookIDKeyReleased(evt);
+            }
+        });
 
         ibookButton.setBackground(new java.awt.Color(240, 240, 239));
         ibookButton.setText("OK");
@@ -747,12 +788,17 @@ public class MainWindow extends javax.swing.JFrame {
         ibookResetButton.setBackground(new java.awt.Color(240, 240, 239));
         ibookResetButton.setText("Reset");
         ibookResetButton.setFocusPainted(false);
+        ibookResetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ibookResetButtonActionPerformed(evt);
+            }
+        });
 
         jLabel15.setText("Books issued");
 
         ibookMemberDetails.setFont(new java.awt.Font("Source Sans Pro Light", 0, 18)); // NOI18N
         ibookMemberDetails.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ibookMemberDetails.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/id.png"))); // NOI18N
+        ibookMemberDetails.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/user.png"))); // NOI18N
         ibookMemberDetails.setText("Member Details");
 
         jLabel16.setText("Phone");
@@ -852,27 +898,45 @@ public class MainWindow extends javax.swing.JFrame {
         amemberNameLabel3.setText("Member ID");
 
         rbookMemberID.setMaximumSize(new java.awt.Dimension(600, 24));
-
-        amemberIDNumberLable3.setText("Book(s) ID");
-
-        rbookBookID.setMaximumSize(new java.awt.Dimension(600, 24));
-
-        ibookButton1.setBackground(new java.awt.Color(240, 240, 239));
-        ibookButton1.setText("Receive");
-        ibookButton1.setFocusPainted(false);
-        ibookButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ibookButton1ActionPerformed(evt);
+        rbookMemberID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                rbookMemberIDKeyReleased(evt);
             }
         });
 
-        ibookResetButton1.setBackground(new java.awt.Color(240, 240, 239));
-        ibookResetButton1.setText("Reset");
-        ibookResetButton1.setFocusPainted(false);
+        amemberIDNumberLable3.setText("Book(s) ID");
+
+        rbookBookID.setEnabled(false);
+        rbookBookID.setMaximumSize(new java.awt.Dimension(600, 24));
+        rbookBookID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                rbookBookIDKeyReleased(evt);
+            }
+        });
+
+        rbookButton.setBackground(new java.awt.Color(240, 240, 239));
+        rbookButton.setText("Receive");
+        rbookButton.setEnabled(false);
+        rbookButton.setFocusPainted(false);
+        rbookButton.setMaximumSize(new java.awt.Dimension(100, 22));
+        rbookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbookButtonActionPerformed(evt);
+            }
+        });
+
+        rbookResetButton.setBackground(new java.awt.Color(240, 240, 239));
+        rbookResetButton.setText("Reset");
+        rbookResetButton.setFocusPainted(false);
+        rbookResetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbookResetButtonActionPerformed(evt);
+            }
+        });
 
         rbookMemberDetails.setFont(new java.awt.Font("Source Sans Pro Light", 0, 18)); // NOI18N
         rbookMemberDetails.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rbookMemberDetails.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/id.png"))); // NOI18N
+        rbookMemberDetails.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/user.png"))); // NOI18N
         rbookMemberDetails.setText("Member Details");
 
         jLabel4.setText("Phone");
@@ -900,11 +964,11 @@ public class MainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(rbookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(rbookPanelLayout.createSequentialGroup()
-                                .addComponent(rbook_msg, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+                                .addComponent(rbook_msg, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ibookButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(rbookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ibookResetButton1))
+                                .addComponent(rbookResetButton))
                             .addComponent(rbookBookID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(rbookMemberID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(rbookPanelLayout.createSequentialGroup()
@@ -939,8 +1003,8 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(rbookBookID, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(rbookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ibookResetButton1)
-                    .addComponent(ibookButton1)
+                    .addComponent(rbookResetButton)
+                    .addComponent(rbookButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rbook_msg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1045,7 +1109,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGap(0, 0, 0)
                         .addComponent(mbookSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mmemberMsg1, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mbook_msg, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mbookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(mbookPanelLayout.createSequentialGroup()
                             .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1075,7 +1139,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mbookSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mbookSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mmemberMsg1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mbook_msg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1386,6 +1450,11 @@ public class MainWindow extends javax.swing.JFrame {
         resetButton.setBackground(new java.awt.Color(240, 240, 239));
         resetButton.setText("Reset");
         resetButton.setFocusPainted(false);
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
 
         addButton.setBackground(new java.awt.Color(240, 240, 239));
         addButton.setText("Add");
@@ -1495,15 +1564,15 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        mlibrarianSearchButton.setBackground(new java.awt.Color(240, 240, 239));
-        mlibrarianSearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/search.png"))); // NOI18N
-        mlibrarianSearchButton.setBorderPainted(false);
-        mlibrarianSearchButton.setFocusPainted(false);
-        mlibrarianSearchButton.setMaximumSize(new java.awt.Dimension(31, 31));
-        mlibrarianSearchButton.setMinimumSize(new java.awt.Dimension(30, 30));
-        mlibrarianSearchButton.addActionListener(new java.awt.event.ActionListener() {
+        mmemberSearchButton.setBackground(new java.awt.Color(240, 240, 239));
+        mmemberSearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/search.png"))); // NOI18N
+        mmemberSearchButton.setBorderPainted(false);
+        mmemberSearchButton.setFocusPainted(false);
+        mmemberSearchButton.setMaximumSize(new java.awt.Dimension(31, 31));
+        mmemberSearchButton.setMinimumSize(new java.awt.Dimension(30, 30));
+        mmemberSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mlibrarianSearchButtonActionPerformed(evt);
+                mmemberSearchButtonActionPerformed(evt);
             }
         });
 
@@ -1594,7 +1663,7 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchMember, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(mlibrarianSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mmemberSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(mmemberMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(sendNotification)
@@ -1638,7 +1707,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(mmemberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchMember, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mlibrarianSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mmemberSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mmemberMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1868,14 +1937,31 @@ public class MainWindow extends javax.swing.JFrame {
         paddrs = this.amemberPmtAddress.getText();
         addedBy = this.db.GetSessionValue("staffID");
         
-        int rs = this.db.insertData("member", "(memberID, name, phone, email, p_address, t_address, booksBorrowed, addedBy) VALUES('"
+        if(name.isEmpty() || id.isEmpty() || phone.isEmpty() || email.isEmpty() || paddrs.isEmpty()){
+            this.aamember_msg.setForeground(Color.red);
+            this.aamember_msg.setText("Fill empty fields");
+            return;
+        }
+        
+        if(!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+            this.aamember_msg.setForeground(Color.red);
+            this.aamember_msg.setText("Email is not valid");
+            return;
+        }
+
+        if(!phone.matches("^[6-9]\\d{9}$")){
+            this.aamember_msg.setForeground(Color.red);
+            this.aamember_msg.setText("Phone is not valid");
+            return;
+        }
+        int rs = this.db.insertData("member", "(memberID, name, phone, email, p_address, t_address, addedBy, onDate) VALUES('"
                 +id+ "','"
                 +name+ "','"
                 +phone+ "','"
                 +email+ "','"
                 +paddrs+ "','"
-                +taddrs+ "',null, '"
-                +addedBy+ "')");
+                +taddrs+ "','"
+                +addedBy+ "', CURRENT_TIMESTAMP)");
         if(rs != 0){
             this.aamember_msg.setForeground(Color.green);
             this.aamember_msg.setText("Member added successfully");
@@ -1890,13 +1976,15 @@ public class MainWindow extends javax.swing.JFrame {
         this.delteMemberButton.setEnabled(false);
         this.sendNotification.setEnabled(false);
         this.blockMemberButton.setEnabled(false);
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) this.mmemberSearchButtonActionPerformed(null);
     }//GEN-LAST:event_searchMemberKeyReleased
 
-    private void mlibrarianSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mlibrarianSearchButtonActionPerformed
+    private void mmemberSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmemberSearchButtonActionPerformed
         String sid = this.searchMember.getText();
         if(sid.length() != 0){
             try {
-                ResultSet rs = this.db.getValueWhere("member", "*", "memberID='"+sid+"'");
+                ResultSet rs = this.db.getValueWhere("member", "memberID='"+sid+"'");
                 if(rs.next()){
                     this.mmemberName.setText(rs.getString("name"));
                     this.mmemberEmail.setText(rs.getString("email"));
@@ -1908,12 +1996,15 @@ public class MainWindow extends javax.swing.JFrame {
                     if(rs.getString("isBlocked").equals("1")) this.blockMemberButton.setText("unblock");
                     else this.blockMemberButton.setText("block");
                     this.blockMemberButton.setEnabled(true);
+                }else{
+                    this.mmemberMsg.setForeground(Color.red);
+                    this.mmemberMsg.setText("Member not found with id: "+sid);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(AdminWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }//GEN-LAST:event_mlibrarianSearchButtonActionPerformed
+    }//GEN-LAST:event_mmemberSearchButtonActionPerformed
 
     private void delteMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delteMemberButtonActionPerformed
         if(this.db.deleteRow("member", "memberID='"+this.searchMember.getText()+"'") != 0){
@@ -1928,13 +2019,28 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_delteMemberButtonActionPerformed
 
     private void blockMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockMemberButtonActionPerformed
-        if(this.db.updateData("member", "isBlocked=true", "memberID='"+this.searchMember.getText()+"'") != 0){
-            this.mmemberMsg.setForeground(Color.green);
-            this.mmemberMsg.setText("member blocked!");
-            memberTableRender(this.db.getRows("member"));
-        }else{
-            this.mmemberMsg.setForeground(Color.red);
-            this.mmemberMsg.setText("Failed to block member!");
+        String mid = this.searchMember.getText();
+        if(this.db.getValueWhere("member", "isBlocked", "memberID='"+mid+"'").equals("1")){
+            if(this.db.updateData("member", "isBlocked=false", "memberID='"+mid+"'") != 0){
+                this.mmemberMsg.setForeground(Color.green);
+                this.mmemberMsg.setText("member ubblocked!");
+                this.blockMemberButton.setText("unblock");
+            }
+            else{
+                this.mmemberMsg.setForeground(Color.red);
+                this.mmemberMsg.setText("Failed to block member!");
+            }
+        }
+        else{
+            if(this.db.updateData("member", "isBlocked=true", "memberID='"+mid+"'") != 0){
+                this.mmemberMsg.setForeground(Color.green);
+                this.mmemberMsg.setText("member blocked!");
+                this.blockMemberButton.setText("unblock");
+            }
+            else{
+                this.mmemberMsg.setForeground(Color.red);
+                this.mmemberMsg.setText("Failed to unblock member!");
+            }
         }
     }//GEN-LAST:event_blockMemberButtonActionPerformed
 
@@ -2003,35 +2109,207 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_mbooksActionPerformed
 
     private void searchBookKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBookKeyReleased
-        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) this.searchBookButtonActionPerformed(null);
+        if(evt.getKeyCode() == KeyEvent.VK_ESCAPE) this.bookTableRender(this.db.getRows("books"));
     }//GEN-LAST:event_searchBookKeyReleased
 
     private void searchBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBookButtonActionPerformed
-        // TODO add your handling code here:
+        String search = this.searchFor.getSelectedItem().toString();
+        String searchfor = this.searchBook.getText();
+        if(search.equals("id"))
+            this.bookTableRender(this.db.getRows("books", "id="+searchfor));
+        if(search.equals("isbn")){
+            searchfor = searchfor.replaceAll("\\s+","");
+            this.bookTableRender(this.db.getRows("books", "isbn='"+searchfor+"'"));
+        }
+        if(search.equals("title"))
+            this.bookTableRender(this.db.getRows("books", "name LIKE \"%"+searchfor+"%\""));
+        if(search.equals("author"))
+            this.bookTableRender(this.db.getRows("books", "author_name LIKE \"%"+searchfor+"%\""));
+        if(search.equals("publication"))
+            this.bookTableRender(this.db.getRows("books", "publication LIKE \"%"+searchfor+"%\""));
     }//GEN-LAST:event_searchBookButtonActionPerformed
 
     private void abookAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abookAddButtonActionPerformed
-        // TODO add your handling code here:
+        
+        String btitle, author, isbn, quantity, price, publication;
+        
+        btitle = this.abookTitle.getText();
+        author = this.abookAuthor.getText();
+        isbn = this.abookISBN.getText();
+        isbn = isbn.replaceAll("\\s+","");
+        quantity = this.abookQuatity.getText();
+        price = this.abookPrice.getText();
+        publication = this.abookPublication.getText();
+        
+        ResultSet temprs = this.db.getRows("books", "ISBN='"+isbn+"'");
+        try {
+            if(temprs.next()){
+                this.abook_msg.setForeground(Color.red);
+                this.abook_msg.setText("This book already added with id: "+temprs.getString("id"));  
+                return;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(btitle.isEmpty() || author.isEmpty() || isbn.isEmpty() || quantity.isEmpty() || price.isEmpty() || publication.isEmpty()){
+            this.abook_msg.setForeground(Color.red);
+            this.abook_msg.setText("Fill empty fields");
+            return;
+        }
+        
+        try{
+            Integer.parseInt(quantity);
+        }catch(NumberFormatException e){
+            this.abook_msg.setForeground(Color.red);
+            this.abook_msg.setText("Quantity must be a number");
+            return; 
+        }
+
+        try{
+            Integer.parseInt(price);
+        }catch(NumberFormatException e){
+            this.abook_msg.setForeground(Color.red);
+            this.abook_msg.setText("Price must be a number");
+            return; 
+        }
+        
+        int rs = this.db.insertData("books", "(name, author_name, ISBN, quantity, status, publication, price, onDate) VALUES (\""
+                +btitle+"\", \""
+                +author+"\", \""
+                +isbn+"\", \""
+                +quantity+"\", \""
+                +quantity+"\", \""
+                +publication+"\", \""
+                +price+"\", CURRENT_TIMESTAMP)");
+        
+        if(rs != 0){
+            this.abook_msg.setForeground(Color.green);
+            this.abook_msg.setText("New book added");
+            this.bookTableRender(this.db.getRows("books"));
+        }else{
+            this.abook_msg.setForeground(Color.red);
+            this.abook_msg.setText("Failed to add new book");
+        }
     }//GEN-LAST:event_abookAddButtonActionPerformed
 
     private void ibookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ibookButtonActionPerformed
-        // TODO add your handling code here:
+        String mid = this.ibookMemberID.getText();
+        String bid = this.ibookBookID.getText();
+        String issued = this.db.getValueWhere("member", "booksBorrowed", "memberID=\""+mid+"\"");
+        String[] bidAr = bid.split(",");
+        String bidTime = "";
+        
+        int bcnt = 0;
+        
+        for(int i = 0 ; i< bidAr.length; ++i){
+            String tmp, atl;
+            tmp = new SimpleDateFormat("yyyy.MM.dd").format(new Date());
+            atl = (i+1)==bidAr.length?"":",";
+            bidTime += bidAr[i] +"-"+ tmp+atl;
+        }
+        
+        if(issued.isEmpty() || issued.equals("null")){
+            issued = "";
+        }else{
+            issued += ",";
+        }
+        
+        if(this.db.updateData("member", "booksBorrowed=\""+(issued+bidTime)+"\"", "memberID=\""+mid+"\"") != 0){
+            for(int i = 0; i < bidAr.length; ++i){
+                int st = this.db.getIntValueWhere("books", "status", "id="+bidAr[i]);
+                if(this.db.updateData("books", "status="+String.valueOf((st-1)), "id="+bidAr[i]) != 0) ++bcnt;
+            }
+            
+            if(bcnt == bidAr.length){
+                this.ibook_msg.setForeground(Color.green);
+                this.ibook_msg.setText("book issued");
+                this.memberTableRender(this.db.getRows("member"));
+                this.bookTableRender(this.db.getRows("books"));
+            }else{
+                this.ibook_msg.setForeground(Color.red);
+                this.ibook_msg.setText(String.valueOf(bcnt)+" books issued");
+                this.memberTableRender(this.db.getRows("table"));
+                this.bookTableRender(this.db.getRows("books"));
+            }
+        }
     }//GEN-LAST:event_ibookButtonActionPerformed
 
-    private void ibookButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ibookButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ibookButton1ActionPerformed
+    private void rbookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbookButtonActionPerformed
+        String mid = this.rbookMemberID.getText();
+        String bid = this.rbookBookID.getText();
+        String[] issued = this.db.getValueWhere("member", "booksBorrowed", "memberID=\""+mid+"\"").split(",");
+        String[] bidAr = bid.split(",");
+        String toSave = "";
+        
+        int bcnt = 0;
+
+        for(int i =0; i < issued.length; ++i){
+            String tmp = issued[i].split("-")[0];
+            if(!Arrays.asList(bidAr).contains(tmp)){
+                String atl = (i+1)==issued.length?"":",";
+                toSave += issued[i] + atl;
+            }
+        }
+        
+        if(this.db.updateData("member", "booksBorrowed=\""+toSave+"\"", "memberID=\""+mid+"\"") != 0){
+            for(int i = 0; i < bidAr.length; ++i){
+                int st = this.db.getIntValueWhere("books", "status", "id="+bidAr[i]);
+                if(this.db.updateData("books", "status="+String.valueOf((st+1)), "id="+bidAr[i]) != 0) ++bcnt;
+            }
+            
+            if(bcnt == bidAr.length){
+                this.rbook_msg.setForeground(Color.green);
+                this.rbook_msg.setText("Books Return successfully!");
+                this.memberTableRender(this.db.getRows("member"));
+                this.bookTableRender(this.db.getRows("books"));
+            }else{
+                this.rbook_msg.setForeground(Color.red);
+                this.rbook_msg.setText(String.valueOf(bcnt)+" books return");
+                this.memberTableRender(this.db.getRows("table"));
+                this.bookTableRender(this.db.getRows("books"));
+            }
+        }
+    }//GEN-LAST:event_rbookButtonActionPerformed
 
     private void mbookSearchBookKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mbookSearchBookKeyReleased
-        // TODO add your handling code here:
+        this.mbook_msg.setText("");
+        this.mbookDeleteButton.setEnabled(false);
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) this.mbookSearchButtonActionPerformed(null);
     }//GEN-LAST:event_mbookSearchBookKeyReleased
 
     private void mbookSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbookSearchButtonActionPerformed
-        // TODO add your handling code here:
+        String bookId = this.mbookSearchBook.getText();
+        try{
+            Integer.parseInt(bookId);
+        }catch(NumberFormatException e){
+            this.mbook_msg.setForeground(Color.red);
+            this.mbook_msg.setText("Book ID must be a number");
+            return;
+        }
+        if(!bookId.isEmpty()){
+            try {
+                ResultSet rs = this.db.getValueWhere("books", "id="+bookId);
+                if(!rs.next()) return;
+                this.mbookISBN.setText(rs.getString("ISBN"));
+                this.mbookPrice.setText(rs.getString("price"));
+                this.mbookQuantity.setText(rs.getString("quantity"));
+                this.mbookTitle.setText(rs.getString("name"));
+                this.mbookDeleteButton.setEnabled(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_mbookSearchButtonActionPerformed
 
     private void mbookDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbookDeleteButtonActionPerformed
-        // TODO add your handling code here:
+        String bookId = this.mbookSearchBook.getText();
+        if(this.db.deleteRow("books", "id="+bookId) != 0){
+            this.mbook_msg.setForeground(Color.green);
+            this.mbook_msg.setText("Book deleted!");
+            this.bookTableRender(this.db.getRows("books"));
+        }
     }//GEN-LAST:event_mbookDeleteButtonActionPerformed
 
     private void booksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_booksActionPerformed
@@ -2054,8 +2332,248 @@ public class MainWindow extends javax.swing.JFrame {
         this.abookPanel.setVisible(true);
     }//GEN-LAST:event_abookActionPerformed
 
+    private void abookResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abookResetButtonActionPerformed
+        this.abook_msg.setText("");
+        this.abookTitle.setText("");
+        this.abookAuthor.setText("");
+        this.abookISBN.setText("");
+        this.abookQuatity.setText("");
+        this.abookPrice.setText("");
+        this.abookPublication.setText("");
+    }//GEN-LAST:event_abookResetButtonActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        this.aamember_msg.setText("");
+        this.amemberEmail.setText("");
+        this.amemberIDNumber.setText("");
+        this.amemberName.setText("");
+        this.amemberPhoneNumber.setText("");
+        this.amemberTempAddress.setText("");
+        this.amemberPmtAddress.setText("");
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void reloadButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadButton1ActionPerformed
+        this.bookTableRender(this.db.getRows("books"));
+    }//GEN-LAST:event_reloadButton1ActionPerformed
+
+    private void ibookMemberIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ibookMemberIDKeyReleased
+        String mid = this.ibookMemberID.getText();
+        if(!mid.isEmpty()){
+            ResultSet rs = this.db.getValueWhere("member", "memberID=\""+mid+"\"");
+            try {
+                if(rs.next()){
+                    this.ibook_msg.setText("");
+                    if(rs.getString("isBlocked").equals("1")){
+                        this.ibookMemberDetails.setText(rs.getString("name")+" (this member is blocked)");
+                        this.ibookBookID.setEnabled(false);
+                    }
+                    else{
+                        this.ibookMemberDetails.setText(rs.getString("name"));
+                        this.ibookBookID.setEnabled(true);
+                    }
+                    this.ibookMemberEmail.setText(rs.getString("email"));
+                    this.ibookMemberPhone.setText(rs.getString("phone"));
+                    this.ibookMemberAddress.setText(rs.getString("t_address"));
+                    String bb = rs.getString("booksBorrowed");
+                    if(rs.wasNull()){
+                        this.ibookBookIssued.setText("no book issued till now");
+                    }else{
+                        this.ibookBookIssued.setText(this.bookIdToName(bb));
+                    }
+                }else{
+                    this.ibook_msg.setForeground(Color.red);
+                    this.ibook_msg.setText("No member found with id: "+mid);
+                    this.ibookBookID.setEnabled(false);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_ibookMemberIDKeyReleased
+
+    private void ibookBookIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ibookBookIDKeyReleased
+        String book = this.ibookBookID.getText();
+        book = book.replaceAll("\\s+","");
+        String[] bookAr;
+        int lastbook = 0;
+        if(!book.isEmpty()){
+            bookAr = book.split(",");
+            this.ibook_msg.setForeground(Color.green);
+            this.ibook_msg.setText("");
+            for(int i = 0; i < bookAr.length; ++i){
+                try{
+                    Integer.parseInt(bookAr[i]);
+                }catch(NumberFormatException e){
+                    this.ibook_msg.setForeground(Color.red);
+                    this.ibook_msg.setText("Book ID must be a number");
+                    break;
+                }
+                ResultSet rs = this.db.getValueWhere("books", "id="+bookAr[i]);
+                try {
+                    if(rs.next()){
+                        if(rs.getInt("status") == 0){
+                            this.ibook_msg.setForeground(Color.red);
+                            this.ibook_msg.setText("This book is shortening");
+                            break;
+                        }
+                        String atl = i+1 == bookAr.length ? "":", ";
+                        String bookName = rs.getString("name");
+                        if(bookName.length() > 10){
+                            bookName = bookName.substring(0, 10);
+                        }
+                        this.ibook_msg.setText(this.ibook_msg.getText() + bookName+ atl);
+                        lastbook = 1;
+                    }else{
+                        this.ibook_msg.setText(this.ibook_msg.getText() + "no book with id: "+bookAr[i]);
+                        lastbook = 0;
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            if(book.charAt(book.length()-1) == ',' || lastbook == 0){
+                this.ibookButton.setEnabled(false);
+            }else{
+                this.ibookButton.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_ibookBookIDKeyReleased
+
+    private void ibookResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ibookResetButtonActionPerformed
+        this.ibookBookID.setText("");
+        this.ibookMemberID.setText("");
+        this.ibookMemberEmail.setText("");
+        this.ibookMemberPhone.setText("");
+        this.ibookMemberAddress.setText("");
+        this.ibookMemberDetails.setText("");
+        this.ibookBookIssued.setText("");
+        this.ibook_msg.setText("");
+    }//GEN-LAST:event_ibookResetButtonActionPerformed
+
+    private void rbookMemberIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbookMemberIDKeyReleased
+        String mid = this.rbookMemberID.getText();
+        if(!mid.isEmpty()){
+            ResultSet rs = this.db.getValueWhere("member", "memberID=\""+mid+"\"");
+            try {
+                if(rs.next()){
+                    this.rbook_msg.setText("");
+                    if(rs.getString("isBlocked").equals("1")){
+                        this.rbookMemberDetails.setText(rs.getString("name")+" (this member is blocked)");
+                        this.rbookBookID.setEnabled(false);
+                    }
+                    else{
+                        this.rbookMemberDetails.setText(rs.getString("name"));
+                        this.rbookBookID.setEnabled(true);
+                    }
+                    this.rbookMemberEmail.setText(rs.getString("email"));
+                    this.rbookMemberPhone.setText(rs.getString("phone"));
+                    this.rbookMemberAddress.setText(rs.getString("t_address"));
+                    String bb = rs.getString("booksBorrowed");
+                    if(rs.wasNull()){
+                        this.rbookBookIssued.setText("no book issued till now");
+                    }else{
+                        this.rbookBookIssued.setText(this.bookIdToName(bb));
+                    }
+                }else{
+                    this.rbook_msg.setForeground(Color.red);
+                    this.rbook_msg.setText("No member found with id: "+mid);
+                    this.rbookBookID.setEnabled(false);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_rbookMemberIDKeyReleased
+
+    private void rbookBookIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbookBookIDKeyReleased
+        String book = this.rbookBookID.getText();
+        String mid = this.rbookMemberID.getText();
+        String bb = this.db.getValueWhere("member", "booksBorrowed", "memberID=\""+mid+"\"");
+        String[] bbAr = bb.split(",");
+        String[] rbbAr = new String[20];
+        for(int i = 0; i < bbAr.length; ++i){
+            String temp = bbAr[i];
+            String[] tmp = temp.split("-");
+//            this.rbook_msg.setText(tmp[0]);
+            rbbAr[i] = tmp[0];
+        }
+        book = book.replaceAll("\\s+","");
+        String[] bookAr;
+        int lastbook = 0;
+        if(!book.isEmpty()){
+            bookAr = book.split(",");
+            this.rbook_msg.setForeground(Color.green);
+            this.rbook_msg.setText("");
+            for(int i = 0; i < bookAr.length; ++i){
+                try{
+                    Integer.parseInt(bookAr[i]);
+                }catch(NumberFormatException e){
+                    this.rbook_msg.setForeground(Color.red);
+                    this.rbook_msg.setText("Book ID must be a number");
+                    break;
+                }
+                ResultSet rs = this.db.getValueWhere("books", "id="+bookAr[i]);
+                try {
+                    if(rs.next()){
+                        if(Arrays.asList(rbbAr).contains(bookAr[i])){
+                            String atl = i+1 == bookAr.length ? "":", ";
+                            String bookName = rs.getString("name");
+                            if(bookName.length() > 10){
+                                bookName = bookName.substring(0, 10);
+                            }
+                            this.rbook_msg.setText(this.rbook_msg.getText() + bookName+ atl);
+                            lastbook = 1;
+                        }
+                        else{
+                            this.rbook_msg.setText(this.rbook_msg.getText() + "this book is not in borrowed list");
+                            lastbook = 0;   
+                            break;
+                        }
+                    }else{
+                        this.rbook_msg.setText(this.rbook_msg.getText() + "no book with id: "+bookAr[i]);
+                        lastbook = 0;
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            if(book.charAt(book.length()-1) == ',' || lastbook == 0){
+                this.rbookButton.setEnabled(false);
+            }else{
+                this.rbookButton.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_rbookBookIDKeyReleased
+
+    private void rbookResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbookResetButtonActionPerformed
+        this.rbook_msg.setText("");
+        this.rbookBookID.setText("");
+        this.rbookMemberID.setText("");
+        this.rbookMemberEmail.setText("");
+        this.rbookMemberDetails.setText("");
+        this.rbookMemberPhone.setText("");
+        this.rbookMemberAddress.setText("");
+        this.rbookBookIssued.setText("");
+    }//GEN-LAST:event_rbookResetButtonActionPerformed
+
     public void GetSession(ResultSet rs){
         this.db.SessionStart(rs);
+    }
+    
+    private String bookIdToName(String str){
+        if(str.isEmpty()) return null;
+        String[] bidAr = str.split(",");
+        String result = "";
+        for(int i = 0; i < bidAr.length; ++i){
+            String[] bidBit = bidAr[i].split("-");
+            String name = this.db.getValueWhere("books", "name", "id="+bidBit[0]);
+            String atl = (i+1)==bidAr.length?"":", ";
+            result += name+"(on- "+bidBit[1]+")"+atl;
+        }
+        
+        return result;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2066,7 +2584,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel abooPanelTitle2;
     private javax.swing.JButton abook;
     private javax.swing.JButton abookAddButton;
-    private javax.swing.JTextField abookAuther;
+    private javax.swing.JTextField abookAuthor;
     private javax.swing.JTextField abookISBN;
     private javax.swing.JPanel abookPanel;
     private javax.swing.JTextField abookPrice;
@@ -2116,7 +2634,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField ibookBookID;
     private javax.swing.JLabel ibookBookIssued;
     private javax.swing.JButton ibookButton;
-    private javax.swing.JButton ibookButton1;
     private javax.swing.JLabel ibookMemberAddress;
     private javax.swing.JLabel ibookMemberDetails;
     private javax.swing.JLabel ibookMemberEmail;
@@ -2124,7 +2641,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel ibookMemberPhone;
     private javax.swing.JPanel ibookPanel;
     private javax.swing.JButton ibookResetButton;
-    private javax.swing.JButton ibookResetButton1;
     private javax.swing.JLabel ibook_msg;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2168,6 +2684,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField mbookSearchBook;
     private javax.swing.JButton mbookSearchButton;
     private javax.swing.JLabel mbookTitle;
+    private javax.swing.JLabel mbook_msg;
     private javax.swing.JButton mbooks;
     private javax.swing.JButton memberContainerButton;
     private javax.swing.JLayeredPane memberPanelContainer;
@@ -2178,10 +2695,8 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTable memberSearchResult;
     public javax.swing.JPanel membersContainerPanel;
     private javax.swing.JPanel menuPanel;
-    private javax.swing.JButton mlibrarianSearchButton;
     private javax.swing.JLabel mmemberEmail;
     private javax.swing.JLabel mmemberMsg;
-    private javax.swing.JLabel mmemberMsg1;
     private javax.swing.JLabel mmemberName;
     private javax.swing.JLabel mmemberPA;
     private javax.swing.JPanel mmemberPanel;
@@ -2189,16 +2704,19 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel mmemberPanelSearchText;
     private javax.swing.JLabel mmemberPhone;
     private javax.swing.JTextField mmemberSearchBox;
+    private javax.swing.JButton mmemberSearchButton;
     private javax.swing.JLabel mmemberTA;
     private javax.swing.JTextArea notificationText;
     private javax.swing.JTextField rbookBookID;
     private javax.swing.JLabel rbookBookIssued;
+    private javax.swing.JButton rbookButton;
     private javax.swing.JLabel rbookMemberAddress;
     private javax.swing.JLabel rbookMemberDetails;
     private javax.swing.JLabel rbookMemberEmail;
     private javax.swing.JTextField rbookMemberID;
     private javax.swing.JLabel rbookMemberPhone;
     private javax.swing.JPanel rbookPanel;
+    private javax.swing.JButton rbookResetButton;
     private javax.swing.JLabel rbook_msg;
     private javax.swing.JButton rbooks;
     private javax.swing.JButton reloadButton;
@@ -2207,6 +2725,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField searchBook;
     private javax.swing.JButton searchBookButton;
     private javax.swing.JPanel searchBooksPanel;
+    private javax.swing.JComboBox<String> searchFor;
     private javax.swing.JTextField searchMember;
     private javax.swing.JPanel searchMemberPanel;
     private javax.swing.JButton searchMemberPanelButton;
