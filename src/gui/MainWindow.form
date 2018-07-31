@@ -214,13 +214,19 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="settingsPanelSidebar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="973" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                          <Component id="settingsContainer" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="settingsPanelSidebar" alignment="0" max="32767" attributes="0"/>
+                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                          <Component id="settingsContainer" alignment="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -243,7 +249,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                               <Component id="settingsPanelSidebarHeader" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="456" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -259,12 +265,12 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="settingsPanelSidebarHeaderText" alignment="0" max="32767" attributes="0"/>
+                              <Component id="settingsPanelSidebarHeaderText" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="settingsPanelSidebarHeaderText" alignment="0" max="32767" attributes="0"/>
+                              <Component id="settingsPanelSidebarHeaderText" alignment="0" min="-2" pref="97" max="-2" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                       </Layout>
@@ -284,6 +290,21 @@
                       </SubComponents>
                     </Container>
                   </SubComponents>
+                </Container>
+                <Container class="javax.swing.JLayeredPane" name="settingsContainer">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="1223" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="553" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
                 </Container>
               </SubComponents>
             </Container>
@@ -941,50 +962,45 @@
                                   <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="amemberIDNumberLable2" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="amemberNameLabel2" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="1" attributes="0">
-                                                      <Group type="102" alignment="1" attributes="0">
-                                                          <Component id="ibook_msg" pref="466" max="32767" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="ibookButton" min="-2" pref="60" max="-2" attributes="0"/>
-                                                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                                                          <Component id="ibookResetButton" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <Component id="ibookBookID" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="ibookMemberID" alignment="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel16" min="-2" pref="120" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="ibookMemberPhone" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel17" min="-2" pref="120" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="ibookMemberEmail" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel18" min="-2" pref="120" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="ibookMemberAddress" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel15" min="-2" pref="120" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jScrollPane6" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="amemberIDNumberLable2" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="amemberNameLabel2" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
+                                          </Group>
                                           <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <Component id="ibook_msg" pref="466" max="32767" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="ibookButton" min="-2" pref="60" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                                  <Component id="ibookResetButton" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="ibookBookID" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="ibookMemberID" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel16" min="-2" pref="120" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                          <Component id="ibookMemberPhone" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel17" min="-2" pref="120" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                          <Component id="ibookMemberEmail" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel18" min="-2" pref="120" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                          <Component id="ibookMemberAddress" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1029,13 +1045,10 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="jLabel15" min="-2" pref="25" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Component id="jScrollPane6" pref="129" max="32767" attributes="0"/>
+                                      <Component id="jLabel15" min="-2" pref="25" max="-2" attributes="0"/>
+                                      <Component id="jScrollPane6" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace pref="44" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1185,50 +1198,45 @@
                                   <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="amemberIDNumberLable3" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="amemberNameLabel3" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="1" attributes="0">
-                                                      <Group type="102" alignment="1" attributes="0">
-                                                          <Component id="rbook_msg" pref="429" max="32767" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="rbookButton" min="-2" pref="97" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="rbookResetButton" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <Component id="rbookBookID" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="rbookMemberID" alignment="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel4" min="-2" pref="120" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="rbookMemberPhone" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel5" min="-2" pref="120" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="rbookMemberEmail" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel6" min="-2" pref="120" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="rbookMemberAddress" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel14" min="-2" pref="120" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jScrollPane7" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="amemberIDNumberLable3" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="amemberNameLabel3" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
+                                          </Group>
                                           <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <Component id="rbook_msg" pref="429" max="32767" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="rbookButton" min="-2" pref="97" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="rbookResetButton" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="rbookBookID" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="rbookMemberID" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel4" min="-2" pref="120" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                          <Component id="rbookMemberPhone" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel5" min="-2" pref="120" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                          <Component id="rbookMemberEmail" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel6" min="-2" pref="120" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                          <Component id="rbookMemberAddress" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1273,13 +1281,10 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="jLabel14" min="-2" pref="25" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Component id="jScrollPane7" pref="123" max="32767" attributes="0"/>
+                                      <Component id="jLabel14" min="-2" pref="25" max="-2" attributes="0"/>
+                                      <Component id="jScrollPane7" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace pref="42" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
