@@ -2227,14 +2227,20 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_mmemberSearchButtonActionPerformed
 
     private void delteMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delteMemberButtonActionPerformed
-        if(this.db.deleteRow("member", "memberID='"+this.searchMember.getText()+"'") != 0){
-            this.mmemberMsg.setForeground(Color.green);
-            this.mmemberMsg.setText("Member deleted!");
-            memberTableRender(this.db.getRows("member"));
-        }
-        else{
+        String mid = this.searchMember.getText();
+        if(this.db.getValueWhere("member", "booksBorrowed", "memberID=\""+mid+"\"").equals("")){
+            if(this.db.deleteRow("member", "memberID='"+mid+"'") != 0){
+                this.mmemberMsg.setForeground(Color.green);
+                this.mmemberMsg.setText("Member deleted!");
+                memberTableRender(this.db.getRows("member"));
+            }
+            else{
+                this.mmemberMsg.setForeground(Color.red);
+                this.mmemberMsg.setText("Failed to delete member!");
+            }
+        }else{
             this.mmemberMsg.setForeground(Color.red);
-            this.mmemberMsg.setText("Failed to delete member!");
+            this.mmemberMsg.setText("Member can't be deleted because this member has due books!");
         }
     }//GEN-LAST:event_delteMemberButtonActionPerformed
 
