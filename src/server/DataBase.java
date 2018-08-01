@@ -29,7 +29,7 @@ public class DataBase {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/?useSSL=false", "root", "");
             Statement stmnt = conn.createStatement();
-            int r = stmnt.executeUpdate("CREATE DATABASE IF NOT EXISTS libmans_v1");        
+            int r = stmnt.executeUpdate("CREATE DATABASE IF NOT EXISTS libmans_v2");        
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -38,7 +38,7 @@ public class DataBase {
     public void OpenConnection(){
         this.InitDatabase();
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/libmans_v1?useSSL=false", "root", "");       
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/libmans_v2?useSSL=false", "root", "");       
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS admin("
                     + "id INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
                     + "staffID VARCHAR(12),"
