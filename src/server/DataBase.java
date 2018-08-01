@@ -1,5 +1,12 @@
 package server;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -208,5 +215,65 @@ public class DataBase {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+    
+    public Boolean SendMail(String to, String sub, String msg){
+        String url = "https://foxdebug.in/projects/libmans/";
+        String charset = "UTF-8";
+        String query = null;
+        try {
+            query = String.format("from=%s&from-name=%s&to=%s&sub=%s&message=%s&key=$2y$10$M96XskuT3NhLvr2oZ8kIn.8kOyhyu2czh5ad9wnVzp/OU0BSwu4kq"
+                , URLEncoder.encode(this.GetSessionValue("email"), charset)
+                , URLEncoder.encode(this.GetSessionValue("name"), charset)
+                , URLEncoder.encode(to, charset)
+                , URLEncoder.encode(sub, charset)
+                , URLEncoder.encode(msg, charset));
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            URLConnection connection = new URL(url + "?" + query).openConnection();
+            connection.setRequestProperty("Accecpt-Charset", charset);
+            InputStream response = connection.getInputStream();
+//            int status = httpConnection.getResponseCode();
+            connection.connect();
+            return true;
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public Boolean SendMail(String from, String fromName, String to, String sub, String msg){
+        String url = "https://foxdebug.in/projects/libmans/";
+        String charset = "UTF-8";
+        String query = null;
+        try {
+            query = String.format("from=%s&from-name=%s&to=%s&sub=%s&message=%s&key=$2y$10$M96XskuT3NhLvr2oZ8kIn.8kOyhyu2czh5ad9wnVzp/OU0BSwu4kq"
+                , URLEncoder.encode(from, charset)
+                , URLEncoder.encode(fromName, charset)
+                , URLEncoder.encode(to, charset)
+                , URLEncoder.encode(sub, charset)
+                , URLEncoder.encode(msg, charset));
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            URLConnection connection = new URL(url + "?" + query).openConnection();
+            connection.setRequestProperty("Accecpt-Charset", charset);
+            InputStream response = connection.getInputStream();
+//            int status = httpConnection.getResponseCode();
+            connection.connect();
+            return true;
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }

@@ -49,6 +49,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         password = new javax.swing.JPasswordField();
         error_msg = new javax.swing.JLabel();
+        recovorPasswordButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -134,8 +135,18 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        error_msg.setFont(new java.awt.Font("Source Sans Pro Light", 0, 12)); // NOI18N
         error_msg.setForeground(new java.awt.Color(255, 0, 0));
         error_msg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        recovorPasswordButton.setText("recover password");
+        recovorPasswordButton.setContentAreaFilled(false);
+        recovorPasswordButton.setFocusPainted(false);
+        recovorPasswordButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                recovorPasswordButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout mainFrameLayout = new javax.swing.GroupLayout(mainFrame);
         mainFrame.setLayout(mainFrameLayout);
@@ -146,26 +157,31 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainFrameLayout.createSequentialGroup()
-                        .addComponent(error_msg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(loginButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(mainFrameLayout.createSequentialGroup()
+                                .addComponent(error_msg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(69, 69, 69))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainFrameLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(loginButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addComponent(closeButton))
                     .addGroup(mainFrameLayout.createSequentialGroup()
                         .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
                         .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(mainFrameLayout.createSequentialGroup()
                                 .addComponent(adminRadioButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(librarian)
-                                .addGap(134, 134, 134))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                                .addComponent(recovorPasswordButton))
                             .addGroup(mainFrameLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(userName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(password, javax.swing.GroupLayout.Alignment.TRAILING))))))
+                                    .addComponent(password)
+                                    .addComponent(userName))))))
                 .addContainerGap())
         );
         mainFrameLayout.setVerticalGroup(
@@ -183,12 +199,15 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(adminRadioButton)
-                    .addComponent(librarian))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(error_msg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(loginButton)
+                    .addComponent(librarian)
+                    .addComponent(recovorPasswordButton))
+                .addGroup(mainFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(mainFrameLayout.createSequentialGroup()
+                        .addComponent(error_msg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(loginButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainFrameLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(closeButton)))
                 .addContainerGap())
         );
@@ -204,7 +223,7 @@ public class Login extends javax.swing.JFrame {
             .addComponent(mainFrame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(417, 209));
+        setSize(new java.awt.Dimension(439, 253));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -270,6 +289,18 @@ public class Login extends javax.swing.JFrame {
         if(evt.getKeyCode() == KeyEvent.VK_ESCAPE) this.closeButtonMouseClicked(null);
     }//GEN-LAST:event_passwordKeyReleased
 
+    private void recovorPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recovorPasswordButtonActionPerformed
+        PasswordRecovery pr = new PasswordRecovery();
+        
+        if(librarian.isSelected()){
+            pr.typeReset = "librarian";
+        }else{
+            pr.typeReset = "admin";
+        }
+        this.setVisible(false);
+        pr.setVisible(true);
+    }//GEN-LAST:event_recovorPasswordButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup accountType;
@@ -284,6 +315,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton loginButton;
     private javax.swing.JPanel mainFrame;
     private javax.swing.JPasswordField password;
+    private javax.swing.JButton recovorPasswordButton;
     private javax.swing.JTextField userName;
     // End of variables declaration//GEN-END:variables
     private final DataBase db;

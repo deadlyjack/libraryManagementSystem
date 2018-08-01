@@ -32,6 +32,7 @@ public class MainWindow extends javax.swing.JFrame {
         ContainerVisiblity(false);
         PanelVisiblity(false);
         this.booksContanerPanel.setVisible(true);
+        this.ibookPanel.setVisible(true);
         memberTableRender(this.db.getRows("member"));
         bookTableRender(this.db.getRows("books"));
     }
@@ -374,7 +375,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(settingsPanelSidebarLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(settingsPanelSidebarHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 456, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout settingsContainerLayout = new javax.swing.GroupLayout(settingsContainer);
@@ -1454,7 +1455,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         amemberIDNumber.setMaximumSize(new java.awt.Dimension(600, 24));
 
-        amemberIDNumberLable.setText("ID Number");
+        amemberIDNumberLable.setText("ID");
 
         amemberPhoneNumber.setMaximumSize(new java.awt.Dimension(600, 24));
 
@@ -1882,6 +1883,25 @@ public class MainWindow extends javax.swing.JFrame {
     private void booksContainerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_booksContainerButtonActionPerformed
         ContainerVisiblity(false);
         this.booksContanerPanel.setVisible(true);
+        switch(bpLast){
+            case "abook":
+                this.abookPanel.setVisible(true);
+                break;
+            case "ibook":
+                this.ibookPanel.setVisible(true);
+                break;
+            case "rbook":
+                this.rbookPanel.setVisible(true);
+                break;
+            case "searchBooks":
+                this.searchBooksPanel.setVisible(true);
+                break;
+            case "mbook":
+                this.mbookPanel.setVisible(true);
+                break;
+            default:
+                this.ibookPanel.setVisible(true);
+        }
     }//GEN-LAST:event_booksContainerButtonActionPerformed
 
     private void booksContainerButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksContainerButtonMouseExited
@@ -1895,6 +1915,19 @@ public class MainWindow extends javax.swing.JFrame {
     private void memberContainerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberContainerButtonActionPerformed
         ContainerVisiblity(false);
         this.membersContainerPanel.setVisible(true);
+        switch(mpLast){
+            case "amember":
+                this.amemberPanel.setVisible(true);
+                break;
+            case "mmember":
+                this.mmemberPanel.setVisible(true);
+                break;
+            case "searchMember":
+                this.searchMemberPanel.setVisible(true);
+                break;
+            default:
+                this.searchMemberPanel.setVisible(true);
+        }
     }//GEN-LAST:event_memberContainerButtonActionPerformed
 
     private void memberContainerButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_memberContainerButtonMouseExited
@@ -1922,11 +1955,13 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_amemberPanelButtonMouseExited
 
     private void searchMemberPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchMemberPanelButtonActionPerformed
+        mpLast = "searchMember";
         PanelVisiblity(false);
         this.searchMemberPanel.setVisible(true);
     }//GEN-LAST:event_searchMemberPanelButtonActionPerformed
 
     private void amemberPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amemberPanelButtonActionPerformed
+        mpLast = "amember";
         PanelVisiblity(false);
         this.amemberPanel.setVisible(true);
     }//GEN-LAST:event_amemberPanelButtonActionPerformed
@@ -2073,12 +2108,16 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_blockMemberButtonActionPerformed
 
     private void sendNotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendNotificationActionPerformed
-        if(this.db.updateData("librarian", "msg='"+this.notificationText.getText()+"'", "staffID='"+this.searchMember.getText()+"'") != 0){
+        String sub = "No reply library management system";
+        String msg = this.notificationText.getText();
+        String to = this.mmemberEmail.getText();
+        
+        if(this.db.SendMail(to, sub, msg)){
             this.mmemberMsg.setForeground(Color.green);
-            this.mmemberMsg.setText("Message sent!");
+            this.mmemberMsg.setText("mail sent");
         }else{
             this.mmemberMsg.setForeground(Color.red);
-            this.mmemberMsg.setText("Failed to send message!");
+            this.mmemberMsg.setText("failed to send mail");
         }
     }//GEN-LAST:event_sendNotificationActionPerformed
 
@@ -2087,6 +2126,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_mmemberPanelMouseEntered
 
     private void mmemberPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmemberPanelButtonActionPerformed
+        mpLast = "mmember";
         PanelVisiblity(false);
         this.mmemberPanel.setVisible(true);
     }//GEN-LAST:event_mmemberPanelButtonActionPerformed
@@ -2132,6 +2172,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_mbooksMouseExited
 
     private void mbooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbooksActionPerformed
+        bpLast = "mbook";
         PanelVisiblity(false);
         this.mbookPanel.setVisible(true);
     }//GEN-LAST:event_mbooksActionPerformed
@@ -2341,21 +2382,25 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_mbookDeleteButtonActionPerformed
 
     private void booksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_booksActionPerformed
+        bpLast = "searchBooks";
         PanelVisiblity(false);
         this.searchBooksPanel.setVisible(true);
     }//GEN-LAST:event_booksActionPerformed
 
     private void ibookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ibookActionPerformed
+        bpLast = "ibook";
         PanelVisiblity(false);
         this.ibookPanel.setVisible(true);
     }//GEN-LAST:event_ibookActionPerformed
 
     private void rbooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbooksActionPerformed
+        bpLast = "rbook";
         PanelVisiblity(false);
         this.rbookPanel.setVisible(true);
     }//GEN-LAST:event_rbooksActionPerformed
 
     private void abookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abookActionPerformed
+        bpLast = "abook";
         PanelVisiblity(false);
         this.abookPanel.setVisible(true);
     }//GEN-LAST:event_abookActionPerformed
@@ -2386,6 +2431,16 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void ibookMemberIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ibookMemberIDKeyReleased
         String mid = this.ibookMemberID.getText();
+        if(mid.equals("")){
+            this.ibook_msg.setText("");
+            this.ibookBookID.setText("");
+            this.ibookMemberEmail.setText("");
+            this.ibookMemberPhone.setText("");
+            this.ibookMemberAddress.setText("");
+            this.ibookMemberDetails.setText("Member Details");
+            this.ibookBookIssued.setText("");
+            return;
+        }
         if(!mid.isEmpty()){
             ResultSet rs = this.db.getValueWhere("member", "memberID=\""+mid+"\"");
             try {
@@ -2412,6 +2467,12 @@ public class MainWindow extends javax.swing.JFrame {
                     this.ibook_msg.setForeground(Color.red);
                     this.ibook_msg.setText("No member found with id: "+mid);
                     this.ibookBookID.setEnabled(false);
+                    this.ibookBookID.setText("");
+                    this.ibookMemberEmail.setText("");
+                    this.ibookMemberPhone.setText("");
+                    this.ibookMemberAddress.setText("");
+                    this.ibookMemberDetails.setText("Member Details");
+                    this.ibookBookIssued.setText("");
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -2436,6 +2497,17 @@ public class MainWindow extends javax.swing.JFrame {
                     this.ibook_msg.setText("Book ID must be a number");
                     break;
                 }
+                int brk = 0;
+                for(int j = 0; j < bookAr.length; ++j){
+                    if(i!=j && bookAr[j].equals(bookAr[i])){
+                            this.ibook_msg.setForeground(Color.red);
+                            this.ibook_msg.setText("A book Cannot be issued twice.");
+                            break;
+                    }else{
+                        brk = 1;
+                    }
+                }
+                if(brk == 0) break;
                 ResultSet rs = this.db.getValueWhere("books", "id="+bookAr[i]);
                 try {
                     if(rs.next()){
@@ -2481,6 +2553,16 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void rbookMemberIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbookMemberIDKeyReleased
         String mid = this.rbookMemberID.getText();
+        if(mid.equals("")){
+            this.rbook_msg.setText("");
+            this.rbookBookID.setText("");
+            this.rbookMemberEmail.setText("");
+            this.rbookMemberPhone.setText("");
+            this.rbookMemberAddress.setText("");
+            this.rbookMemberDetails.setText("Member Details");
+            this.rbookBookIssued.setText("");
+            return;
+        }
         if(!mid.isEmpty()){
             ResultSet rs = this.db.getValueWhere("member", "memberID=\""+mid+"\"");
             try {
@@ -2507,6 +2589,12 @@ public class MainWindow extends javax.swing.JFrame {
                     this.rbook_msg.setForeground(Color.red);
                     this.rbook_msg.setText("No member found with id: "+mid);
                     this.rbookBookID.setEnabled(false);
+                    this.rbookBookID.setText("");
+                    this.rbookMemberEmail.setText("");
+                    this.rbookMemberPhone.setText("");
+                    this.rbookMemberAddress.setText("");
+                    this.rbookMemberDetails.setText("Member Details");
+                    this.rbookBookIssued.setText("");
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -2541,6 +2629,17 @@ public class MainWindow extends javax.swing.JFrame {
                     this.rbook_msg.setText("Book ID must be a number");
                     break;
                 }
+                int brk = 0;
+                for(int j = 0; j < bookAr.length; ++j){
+                    if(i!=j && bookAr[j].equals(bookAr[i])){
+                            this.rbook_msg.setForeground(Color.red);
+                            this.rbook_msg.setText("A book Cannot be returned twice.");
+                            break;
+                    }else{
+                        brk = 1;
+                    }
+                }
+                if(brk == 0) break;
                 ResultSet rs = this.db.getValueWhere("books", "id="+bookAr[i]);
                 try {
                     if(rs.next()){
@@ -2768,4 +2867,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel settingsPanelSidebarHeaderText;
     // End of variables declaration//GEN-END:variables
     private final DataBase db;
+    private String bpLast = "";
+    private String mpLast = "";
+    private String spLast = "";
 }

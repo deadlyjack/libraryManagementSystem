@@ -551,7 +551,7 @@ public class AdminWindow extends javax.swing.JFrame {
         SettingsEmail.setMinimumSize(new java.awt.Dimension(300, 25));
 
         SettingsPasswordlLable.setFont(new java.awt.Font("Source Sans Pro Light", 0, 12)); // NOI18N
-        SettingsPasswordlLable.setText("Password");
+        SettingsPasswordlLable.setText("New Password");
         SettingsPasswordlLable.setMaximumSize(new java.awt.Dimension(150, 28));
         SettingsPasswordlLable.setMinimumSize(new java.awt.Dimension(80, 28));
 
@@ -744,7 +744,7 @@ public class AdminWindow extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(delteLibrarianButton))
                             .addGroup(mlibrarianPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchStaffID, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
@@ -1109,12 +1109,16 @@ public class AdminWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_blockLibrarianButtonActionPerformed
 
     private void sendNotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendNotificationActionPerformed
-        if(this.db.updateData("librarian", "msg='"+this.notificationText.getText()+"'", "staffID='"+this.searchStaffID.getText()+"'") != 0){
+        String sub = "No reply library management system";
+        String msg = this.notificationText.getText();
+        String to = this.mlibrarianEmilLabel.getText();
+        
+        if(this.db.SendMail(to, sub, msg)){
             this.mlibrarianMsg.setForeground(Color.green);
-            this.mlibrarianMsg.setText("Message sent!"); 
+            this.mlibrarianMsg.setText("mail sent");
         }else{
             this.mlibrarianMsg.setForeground(Color.red);
-            this.mlibrarianMsg.setText("Failed to send message!");          
+            this.mlibrarianMsg.setText("failed to send mail");
         }
     }//GEN-LAST:event_sendNotificationActionPerformed
 
