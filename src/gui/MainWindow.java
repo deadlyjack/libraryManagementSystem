@@ -31,8 +31,8 @@ public class MainWindow extends javax.swing.JFrame {
     public final void initMainWindow(){
         ContainerVisiblity(false);
         PanelVisiblity(false);
-        this.booksContanerPanel.setVisible(true);
-        this.ibookPanel.setVisible(true);
+        this.booksContainerButtonActionPerformed(null);
+        this.ibookActionPerformed(null);
         memberTableRender(this.db.getRows("member"));
         bookTableRender(this.db.getRows("books"));
     }
@@ -89,20 +89,15 @@ public class MainWindow extends javax.swing.JFrame {
         booksContainerButton = new javax.swing.JButton();
         settingsContainerButton = new javax.swing.JButton();
         layerContainer = new javax.swing.JLayeredPane();
-        settingsContainerPanel = new javax.swing.JPanel();
-        settingsPanelSidebar = new javax.swing.JPanel();
-        settingsPanelSidebarHeader = new javax.swing.JPanel();
-        settingsPanelSidebarHeaderText = new javax.swing.JLabel();
-        settingsContainer = new javax.swing.JLayeredPane();
         booksContanerPanel = new javax.swing.JPanel();
         booksPanelSidebar = new javax.swing.JPanel();
         booksPanelSidebarHeader = new javax.swing.JPanel();
         booksPanelSidebarHeaderText = new javax.swing.JLabel();
         books = new javax.swing.JButton();
         abook = new javax.swing.JButton();
-        rbooks = new javax.swing.JButton();
+        rbook = new javax.swing.JButton();
         ibook = new javax.swing.JButton();
-        mbooks = new javax.swing.JButton();
+        mbook = new javax.swing.JButton();
         booksContainer = new javax.swing.JLayeredPane();
         searchBooksPanel = new javax.swing.JPanel();
         bookPanelHeader = new javax.swing.JLabel();
@@ -244,6 +239,25 @@ public class MainWindow extends javax.swing.JFrame {
         mmemberPA = new javax.swing.JLabel();
         mmemberTA = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        settingsContainerPanel = new javax.swing.JPanel();
+        settingsPanelSidebar = new javax.swing.JPanel();
+        settingsPanelSidebarHeader = new javax.swing.JPanel();
+        booksPanelSidebarHeaderText1 = new javax.swing.JLabel();
+        settingsAccountPanelButton = new javax.swing.JButton();
+        settingsContainer = new javax.swing.JLayeredPane();
+        settingsAccountPanel = new javax.swing.JPanel();
+        settingsPanelHeader = new javax.swing.JLabel();
+        amemberNameLabel4 = new javax.swing.JLabel();
+        settingsAccountName = new javax.swing.JTextField();
+        settingsAccountEmail = new javax.swing.JTextField();
+        amemberIDNumberLable4 = new javax.swing.JLabel();
+        settingsAccountResetButton = new javax.swing.JButton();
+        settingsAccountSaveButton = new javax.swing.JButton();
+        amemberPhoneNumberLabel2 = new javax.swing.JLabel();
+        settingsAccountMsg = new javax.swing.JLabel();
+        amemberEmailLabel4 = new javax.swing.JLabel();
+        settingsAccountNewPassword = new javax.swing.JPasswordField();
+        settingsAccountOldPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lirary Managment System");
@@ -344,68 +358,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         layerContainer.setBackground(new java.awt.Color(153, 153, 153));
 
-        settingsPanelSidebar.setBackground(new java.awt.Color(255, 255, 255));
-
-        settingsPanelSidebarHeader.setBackground(new java.awt.Color(153, 255, 255));
-
-        settingsPanelSidebarHeaderText.setFont(new java.awt.Font("Source Sans Pro Light", 0, 18)); // NOI18N
-        settingsPanelSidebarHeaderText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        settingsPanelSidebarHeaderText.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/40x40/settings.png"))); // NOI18N
-        settingsPanelSidebarHeaderText.setText("Settings");
-
-        javax.swing.GroupLayout settingsPanelSidebarHeaderLayout = new javax.swing.GroupLayout(settingsPanelSidebarHeader);
-        settingsPanelSidebarHeader.setLayout(settingsPanelSidebarHeaderLayout);
-        settingsPanelSidebarHeaderLayout.setHorizontalGroup(
-            settingsPanelSidebarHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(settingsPanelSidebarHeaderText, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        settingsPanelSidebarHeaderLayout.setVerticalGroup(
-            settingsPanelSidebarHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(settingsPanelSidebarHeaderText, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
-        javax.swing.GroupLayout settingsPanelSidebarLayout = new javax.swing.GroupLayout(settingsPanelSidebar);
-        settingsPanelSidebar.setLayout(settingsPanelSidebarLayout);
-        settingsPanelSidebarLayout.setHorizontalGroup(
-            settingsPanelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(settingsPanelSidebarHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        settingsPanelSidebarLayout.setVerticalGroup(
-            settingsPanelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(settingsPanelSidebarLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(settingsPanelSidebarHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout settingsContainerLayout = new javax.swing.GroupLayout(settingsContainer);
-        settingsContainer.setLayout(settingsContainerLayout);
-        settingsContainerLayout.setHorizontalGroup(
-            settingsContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1223, Short.MAX_VALUE)
-        );
-        settingsContainerLayout.setVerticalGroup(
-            settingsContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 553, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout settingsContainerPanelLayout = new javax.swing.GroupLayout(settingsContainerPanel);
-        settingsContainerPanel.setLayout(settingsContainerPanelLayout);
-        settingsContainerPanelLayout.setHorizontalGroup(
-            settingsContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(settingsContainerPanelLayout.createSequentialGroup()
-                .addComponent(settingsPanelSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 973, Short.MAX_VALUE))
-            .addGroup(settingsContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(settingsContainer, javax.swing.GroupLayout.Alignment.TRAILING))
-        );
-        settingsContainerPanelLayout.setVerticalGroup(
-            settingsContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(settingsPanelSidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(settingsContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(settingsContainer))
-        );
-
         booksPanelSidebar.setBackground(new java.awt.Color(255, 255, 255));
 
         booksPanelSidebarHeader.setBackground(new java.awt.Color(153, 255, 255));
@@ -468,24 +420,24 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        rbooks.setBackground(new java.awt.Color(255, 255, 255));
-        rbooks.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        rbooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/reload.png"))); // NOI18N
-        rbooks.setText("Receive Books");
-        rbooks.setBorderPainted(false);
-        rbooks.setFocusPainted(false);
-        rbooks.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        rbooks.addMouseListener(new java.awt.event.MouseAdapter() {
+        rbook.setBackground(new java.awt.Color(255, 255, 255));
+        rbook.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rbook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/reload.png"))); // NOI18N
+        rbook.setText("Receive Books");
+        rbook.setBorderPainted(false);
+        rbook.setFocusPainted(false);
+        rbook.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        rbook.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                rbooksMouseEntered(evt);
+                rbookMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                rbooksMouseExited(evt);
+                rbookMouseExited(evt);
             }
         });
-        rbooks.addActionListener(new java.awt.event.ActionListener() {
+        rbook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbooksActionPerformed(evt);
+                rbookActionPerformed(evt);
             }
         });
 
@@ -510,24 +462,24 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        mbooks.setBackground(new java.awt.Color(255, 255, 255));
-        mbooks.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        mbooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/settings3.png"))); // NOI18N
-        mbooks.setText("Manage Books");
-        mbooks.setBorderPainted(false);
-        mbooks.setFocusPainted(false);
-        mbooks.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        mbooks.addMouseListener(new java.awt.event.MouseAdapter() {
+        mbook.setBackground(new java.awt.Color(255, 255, 255));
+        mbook.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        mbook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/settings3.png"))); // NOI18N
+        mbook.setText("Manage Books");
+        mbook.setBorderPainted(false);
+        mbook.setFocusPainted(false);
+        mbook.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        mbook.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                mbooksMouseEntered(evt);
+                mbookMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                mbooksMouseExited(evt);
+                mbookMouseExited(evt);
             }
         });
-        mbooks.addActionListener(new java.awt.event.ActionListener() {
+        mbook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mbooksActionPerformed(evt);
+                mbookActionPerformed(evt);
             }
         });
 
@@ -538,9 +490,9 @@ public class MainWindow extends javax.swing.JFrame {
             .addComponent(booksPanelSidebarHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(books, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(abook, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(rbooks, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(rbook, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(ibook, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(mbooks, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(mbook, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
         booksPanelSidebarLayout.setVerticalGroup(
             booksPanelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -550,11 +502,11 @@ public class MainWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(books, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mbooks, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mbook, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ibook, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbooks, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rbook, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(abook, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 251, Short.MAX_VALUE))
@@ -646,7 +598,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(searchBooksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(searchBook, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(searchBookButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(reloadButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(reloadButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(searchFor))
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
@@ -1433,7 +1385,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(mmemberPanelSearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addGroup(searchMemberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(reloadButton, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(reloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(mmemberSearchBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(memberSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
@@ -1680,7 +1632,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(mmemberPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mmemberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 903, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 903, Short.MAX_VALUE)
                     .addGroup(mmemberPanelLayout.createSequentialGroup()
                         .addGroup(mmemberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(mmemberPanelLayout.createSequentialGroup()
@@ -1806,35 +1758,220 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(membersContainerPanelLayout.createSequentialGroup()
                 .addComponent(memberPanelSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(memberPanelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 923, Short.MAX_VALUE))
+                .addComponent(memberPanelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE))
         );
         membersContainerPanelLayout.setVerticalGroup(
             membersContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(memberPanelSidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(memberPanelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+            .addComponent(memberPanelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
         );
 
-        layerContainer.setLayer(settingsContainerPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        settingsPanelSidebar.setBackground(new java.awt.Color(255, 255, 255));
+
+        settingsPanelSidebarHeader.setBackground(new java.awt.Color(153, 255, 255));
+
+        booksPanelSidebarHeaderText1.setFont(new java.awt.Font("Source Sans Pro Light", 0, 18)); // NOI18N
+        booksPanelSidebarHeaderText1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        booksPanelSidebarHeaderText1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/40x40/settings.png"))); // NOI18N
+        booksPanelSidebarHeaderText1.setText("Seetings");
+
+        javax.swing.GroupLayout settingsPanelSidebarHeaderLayout = new javax.swing.GroupLayout(settingsPanelSidebarHeader);
+        settingsPanelSidebarHeader.setLayout(settingsPanelSidebarHeaderLayout);
+        settingsPanelSidebarHeaderLayout.setHorizontalGroup(
+            settingsPanelSidebarHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(booksPanelSidebarHeaderText1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+        );
+        settingsPanelSidebarHeaderLayout.setVerticalGroup(
+            settingsPanelSidebarHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(booksPanelSidebarHeaderText1, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+        );
+
+        settingsAccountPanelButton.setBackground(new java.awt.Color(255, 255, 255));
+        settingsAccountPanelButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        settingsAccountPanelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/16x16/user.png"))); // NOI18N
+        settingsAccountPanelButton.setText("Account");
+        settingsAccountPanelButton.setBorderPainted(false);
+        settingsAccountPanelButton.setFocusPainted(false);
+        settingsAccountPanelButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        settingsAccountPanelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                settingsAccountPanelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                settingsAccountPanelButtonMouseExited(evt);
+            }
+        });
+        settingsAccountPanelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsAccountPanelButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout settingsPanelSidebarLayout = new javax.swing.GroupLayout(settingsPanelSidebar);
+        settingsPanelSidebar.setLayout(settingsPanelSidebarLayout);
+        settingsPanelSidebarLayout.setHorizontalGroup(
+            settingsPanelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(settingsPanelSidebarHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(settingsAccountPanelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        settingsPanelSidebarLayout.setVerticalGroup(
+            settingsPanelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsPanelSidebarLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(settingsPanelSidebarHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(settingsAccountPanelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 428, Short.MAX_VALUE))
+        );
+
+        settingsPanelHeader.setFont(new java.awt.Font("Source Sans Pro Light", 0, 24)); // NOI18N
+        settingsPanelHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        settingsPanelHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/icons/40x40/settings3.png"))); // NOI18N
+        settingsPanelHeader.setText("Change Your Settings");
+        settingsPanelHeader.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+
+        amemberNameLabel4.setText("Name");
+
+        settingsAccountName.setMaximumSize(new java.awt.Dimension(600, 24));
+
+        settingsAccountEmail.setMaximumSize(new java.awt.Dimension(600, 24));
+
+        amemberIDNumberLable4.setText("Email");
+
+        settingsAccountResetButton.setBackground(new java.awt.Color(240, 240, 239));
+        settingsAccountResetButton.setText("Reset");
+        settingsAccountResetButton.setFocusPainted(false);
+        settingsAccountResetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsAccountResetButtonActionPerformed(evt);
+            }
+        });
+
+        settingsAccountSaveButton.setBackground(new java.awt.Color(240, 240, 239));
+        settingsAccountSaveButton.setText("Save");
+        settingsAccountSaveButton.setFocusPainted(false);
+        settingsAccountSaveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsAccountSaveButtonActionPerformed(evt);
+            }
+        });
+
+        amemberPhoneNumberLabel2.setText("New Password");
+
+        amemberEmailLabel4.setText("Old Password");
+
+        javax.swing.GroupLayout settingsAccountPanelLayout = new javax.swing.GroupLayout(settingsAccountPanel);
+        settingsAccountPanel.setLayout(settingsAccountPanelLayout);
+        settingsAccountPanelLayout.setHorizontalGroup(
+            settingsAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsAccountPanelLayout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addGroup(settingsAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(amemberEmailLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(amemberPhoneNumberLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(amemberIDNumberLable4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(amemberNameLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(settingsAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(settingsAccountPanelLayout.createSequentialGroup()
+                        .addComponent(settingsAccountMsg, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(settingsAccountSaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(settingsAccountResetButton))
+                    .addComponent(settingsAccountEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(settingsAccountName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(settingsAccountNewPassword)
+                    .addComponent(settingsAccountOldPassword, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(100, 100, 100))
+            .addComponent(settingsPanelHeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        settingsAccountPanelLayout.setVerticalGroup(
+            settingsAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsAccountPanelLayout.createSequentialGroup()
+                .addComponent(settingsPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addGroup(settingsAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(amemberNameLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(settingsAccountName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(settingsAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(amemberIDNumberLable4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(settingsAccountEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(settingsAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(amemberPhoneNumberLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                    .addComponent(settingsAccountNewPassword))
+                .addGap(18, 18, 18)
+                .addGroup(settingsAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(amemberEmailLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(settingsAccountOldPassword))
+                .addGap(21, 21, 21)
+                .addGroup(settingsAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(settingsAccountMsg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(settingsAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(settingsAccountResetButton)
+                        .addComponent(settingsAccountSaveButton)))
+                .addGap(0, 254, Short.MAX_VALUE))
+        );
+
+        settingsContainer.setLayer(settingsAccountPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout settingsContainerLayout = new javax.swing.GroupLayout(settingsContainer);
+        settingsContainer.setLayout(settingsContainerLayout);
+        settingsContainerLayout.setHorizontalGroup(
+            settingsContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 928, Short.MAX_VALUE)
+            .addGroup(settingsContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(settingsAccountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        settingsContainerLayout.setVerticalGroup(
+            settingsContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 566, Short.MAX_VALUE)
+            .addGroup(settingsContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(settingsAccountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout settingsContainerPanelLayout = new javax.swing.GroupLayout(settingsContainerPanel);
+        settingsContainerPanel.setLayout(settingsContainerPanelLayout);
+        settingsContainerPanelLayout.setHorizontalGroup(
+            settingsContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsContainerPanelLayout.createSequentialGroup()
+                .addComponent(settingsPanelSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(settingsContainer))
+        );
+        settingsContainerPanelLayout.setVerticalGroup(
+            settingsContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(settingsPanelSidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(settingsContainer)
+        );
+
         layerContainer.setLayer(booksContanerPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         layerContainer.setLayer(membersContainerPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layerContainer.setLayer(settingsContainerPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layerContainerLayout = new javax.swing.GroupLayout(layerContainer);
         layerContainer.setLayout(layerContainerLayout);
         layerContainerLayout.setHorizontalGroup(
             layerContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(settingsContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 1228, Short.MAX_VALUE)
             .addGroup(layerContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(booksContanerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layerContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(membersContainerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layerContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(settingsContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layerContainerLayout.setVerticalGroup(
             layerContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(settingsContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 577, Short.MAX_VALUE)
             .addGroup(layerContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(booksContanerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layerContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(membersContainerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layerContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(settingsContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout MainContainerLayout = new javax.swing.GroupLayout(MainContainer);
@@ -1869,11 +2006,16 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void settingsContainerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsContainerButtonActionPerformed
         ContainerVisiblity(false);
+        this.mainPanel = "settings";
+        this.memberContainerButton.setBackground(Color.white);
+        this.booksContainerButton.setBackground(Color.white);
+        this.settingsContainerButton.setBackground(Color.gray);
         this.settingsContainerPanel.setVisible(true);
+        this.settingsAccountPanelButtonActionPerformed(null);
     }//GEN-LAST:event_settingsContainerButtonActionPerformed
 
     private void settingsContainerButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsContainerButtonMouseExited
-        settingsContainerButton.setBackground(java.awt.Color.white);
+        if(!this.mainPanel.equals("settings")) settingsContainerButton.setBackground(java.awt.Color.white);
     }//GEN-LAST:event_settingsContainerButtonMouseExited
 
     private void settingsContainerButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsContainerButtonMouseEntered
@@ -1882,30 +2024,34 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void booksContainerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_booksContainerButtonActionPerformed
         ContainerVisiblity(false);
+        this.mainPanel = "book";
+        this.memberContainerButton.setBackground(Color.white);
+        this.booksContainerButton.setBackground(Color.gray);
+        this.settingsContainerButton.setBackground(Color.white);
         this.booksContanerPanel.setVisible(true);
         switch(bpLast){
             case "abook":
-                this.abookPanel.setVisible(true);
+                this.abookActionPerformed(null);
                 break;
             case "ibook":
-                this.ibookPanel.setVisible(true);
+                this.ibookActionPerformed(null);
                 break;
             case "rbook":
-                this.rbookPanel.setVisible(true);
+                this.rbookActionPerformed(null);
                 break;
             case "searchBooks":
-                this.searchBooksPanel.setVisible(true);
+                this.booksActionPerformed(null);
                 break;
             case "mbook":
-                this.mbookPanel.setVisible(true);
+                this.mbookActionPerformed(null);
                 break;
             default:
-                this.ibookPanel.setVisible(true);
+                this.ibookActionPerformed(null);
         }
     }//GEN-LAST:event_booksContainerButtonActionPerformed
 
     private void booksContainerButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksContainerButtonMouseExited
-        booksContainerButton.setBackground(java.awt.Color.white);
+        if(!this.mainPanel.equals("book")) booksContainerButton.setBackground(java.awt.Color.white);
     }//GEN-LAST:event_booksContainerButtonMouseExited
 
     private void booksContainerButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksContainerButtonMouseEntered
@@ -1914,24 +2060,28 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void memberContainerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberContainerButtonActionPerformed
         ContainerVisiblity(false);
+        this.mainPanel = "member";
+        this.memberContainerButton.setBackground(Color.GRAY);
+        this.booksContainerButton.setBackground(Color.white);
+        this.settingsContainerButton.setBackground(Color.white);
         this.membersContainerPanel.setVisible(true);
         switch(mpLast){
             case "amember":
-                this.amemberPanel.setVisible(true);
+                this.amemberPanelButtonActionPerformed(null);
                 break;
             case "mmember":
-                this.mmemberPanel.setVisible(true);
+                this.mmemberPanelButtonActionPerformed(null);
                 break;
             case "searchMember":
-                this.searchMemberPanel.setVisible(true);
+                this.searchMemberPanelButtonActionPerformed(null);
                 break;
             default:
-                this.searchMemberPanel.setVisible(true);
+                this.searchMemberPanelButtonActionPerformed(null);
         }
     }//GEN-LAST:event_memberContainerButtonActionPerformed
 
     private void memberContainerButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_memberContainerButtonMouseExited
-        memberContainerButton.setBackground(java.awt.Color.white);
+        if(!this.mainPanel.equals("member")) memberContainerButton.setBackground(java.awt.Color.white);
     }//GEN-LAST:event_memberContainerButtonMouseExited
 
     private void memberContainerButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_memberContainerButtonMouseEntered
@@ -1943,7 +2093,8 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_searchMemberPanelButtonMouseEntered
 
     private void searchMemberPanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMemberPanelButtonMouseExited
-        searchMemberPanelButton.setBackground(java.awt.Color.white);
+        if(!mpLast.equals("searchMember"))
+            searchMemberPanelButton.setBackground(java.awt.Color.white);
     }//GEN-LAST:event_searchMemberPanelButtonMouseExited
 
     private void amemberPanelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_amemberPanelButtonMouseEntered
@@ -1951,17 +2102,22 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_amemberPanelButtonMouseEntered
 
     private void amemberPanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_amemberPanelButtonMouseExited
-        amemberPanelButton.setBackground(java.awt.Color.white);
+        if(!mpLast.equals("amember"))
+            amemberPanelButton.setBackground(java.awt.Color.white);
     }//GEN-LAST:event_amemberPanelButtonMouseExited
 
     private void searchMemberPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchMemberPanelButtonActionPerformed
         mpLast = "searchMember";
+        this.MembersPanelButtonBgWhite();
+        this.searchMemberPanelButton.setBackground(Color.cyan);
         PanelVisiblity(false);
         this.searchMemberPanel.setVisible(true);
     }//GEN-LAST:event_searchMemberPanelButtonActionPerformed
 
     private void amemberPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amemberPanelButtonActionPerformed
         mpLast = "amember";
+        this.MembersPanelButtonBgWhite();
+        this.amemberPanelButton.setBackground(Color.cyan);
         PanelVisiblity(false);
         this.amemberPanel.setVisible(true);
     }//GEN-LAST:event_amemberPanelButtonActionPerformed
@@ -1971,7 +2127,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_booksMouseEntered
 
     private void booksMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksMouseExited
-        books.setBackground(java.awt.Color.white);
+        if(!bpLast.equals("searchBooks"))  books.setBackground(java.awt.Color.white);
     }//GEN-LAST:event_booksMouseExited
 
     private void abookMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abookMouseEntered
@@ -1979,7 +2135,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_abookMouseEntered
 
     private void abookMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abookMouseExited
-        abook.setBackground(java.awt.Color.white);
+        if(!bpLast.equals("abook")) abook.setBackground(java.awt.Color.white);
     }//GEN-LAST:event_abookMouseExited
 
     private void mmemberPanelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mmemberPanelButtonMouseEntered
@@ -1987,7 +2143,8 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_mmemberPanelButtonMouseEntered
 
     private void mmemberPanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mmemberPanelButtonMouseExited
-        mmemberPanelButton.setBackground(Color.white);
+        if(!mpLast.equals("mmember"))
+            mmemberPanelButton.setBackground(Color.white);
     }//GEN-LAST:event_mmemberPanelButtonMouseExited
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -2115,6 +2272,7 @@ public class MainWindow extends javax.swing.JFrame {
         if(this.db.SendMail(to, sub, msg)){
             this.mmemberMsg.setForeground(Color.green);
             this.mmemberMsg.setText("mail sent");
+            this.notificationText.setText("");
         }else{
             this.mmemberMsg.setForeground(Color.red);
             this.mmemberMsg.setText("failed to send mail");
@@ -2127,6 +2285,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void mmemberPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmemberPanelButtonActionPerformed
         mpLast = "mmember";
+        this.MembersPanelButtonBgWhite();
+        this.mmemberPanelButton.setBackground(Color.cyan);
         PanelVisiblity(false);
         this.mmemberPanel.setVisible(true);
     }//GEN-LAST:event_mmemberPanelButtonActionPerformed
@@ -2147,35 +2307,35 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mmemberSearchBoxKeyReleased
 
-    private void rbooksMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbooksMouseEntered
-        this.rbooks.setBackground(Color.cyan);
-    }//GEN-LAST:event_rbooksMouseEntered
+    private void rbookMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbookMouseEntered
+        this.rbook.setBackground(Color.cyan);
+    }//GEN-LAST:event_rbookMouseEntered
 
-    private void rbooksMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbooksMouseExited
-        this.rbooks.setBackground(Color.white);
-    }//GEN-LAST:event_rbooksMouseExited
+    private void rbookMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbookMouseExited
+        if(!bpLast.equals("rbook")) this.rbook.setBackground(Color.white);
+    }//GEN-LAST:event_rbookMouseExited
 
     private void ibookMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ibookMouseEntered
         this.ibook.setBackground(Color.cyan);
     }//GEN-LAST:event_ibookMouseEntered
 
     private void ibookMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ibookMouseExited
-        this.ibook.setBackground(Color.white);
+        if(!bpLast.equals("ibook")) this.ibook.setBackground(Color.white);
     }//GEN-LAST:event_ibookMouseExited
 
-    private void mbooksMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mbooksMouseEntered
-        this.mbooks.setBackground(Color.cyan);
-    }//GEN-LAST:event_mbooksMouseEntered
+    private void mbookMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mbookMouseEntered
+        this.mbook.setBackground(Color.cyan);
+    }//GEN-LAST:event_mbookMouseEntered
 
-    private void mbooksMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mbooksMouseExited
-        this.mbooks.setBackground(Color.white);
-    }//GEN-LAST:event_mbooksMouseExited
+    private void mbookMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mbookMouseExited
+        if(!bpLast.equals("mbook")) this.mbook.setBackground(Color.white);
+    }//GEN-LAST:event_mbookMouseExited
 
-    private void mbooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbooksActionPerformed
+    private void mbookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbookActionPerformed
         bpLast = "mbook";
         PanelVisiblity(false);
         this.mbookPanel.setVisible(true);
-    }//GEN-LAST:event_mbooksActionPerformed
+    }//GEN-LAST:event_mbookActionPerformed
 
     private void searchBookKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBookKeyReleased
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) this.searchBookButtonActionPerformed(null);
@@ -2383,24 +2543,32 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void booksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_booksActionPerformed
         bpLast = "searchBooks";
+        this.BooksPanelButtonBgWhite();
+        this.books.setBackground(Color.cyan);
         PanelVisiblity(false);
         this.searchBooksPanel.setVisible(true);
     }//GEN-LAST:event_booksActionPerformed
 
     private void ibookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ibookActionPerformed
         bpLast = "ibook";
+        this.BooksPanelButtonBgWhite();
+        this.ibook.setBackground(Color.cyan);
         PanelVisiblity(false);
         this.ibookPanel.setVisible(true);
     }//GEN-LAST:event_ibookActionPerformed
 
-    private void rbooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbooksActionPerformed
+    private void rbookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbookActionPerformed
         bpLast = "rbook";
+        this.BooksPanelButtonBgWhite();
+        this.rbook.setBackground(Color.cyan);
         PanelVisiblity(false);
         this.rbookPanel.setVisible(true);
-    }//GEN-LAST:event_rbooksActionPerformed
+    }//GEN-LAST:event_rbookActionPerformed
 
     private void abookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abookActionPerformed
         bpLast = "abook";
+        this.BooksPanelButtonBgWhite();
+        this.abook.setBackground(Color.cyan);
         PanelVisiblity(false);
         this.abookPanel.setVisible(true);
     }//GEN-LAST:event_abookActionPerformed
@@ -2685,8 +2853,54 @@ public class MainWindow extends javax.swing.JFrame {
         this.rbookBookIssued.setText("");
     }//GEN-LAST:event_rbookResetButtonActionPerformed
 
+    private void settingsAccountPanelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsAccountPanelButtonMouseEntered
+        this.settingsAccountPanelButton.setBackground(Color.cyan);
+    }//GEN-LAST:event_settingsAccountPanelButtonMouseEntered
+
+    private void settingsAccountPanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsAccountPanelButtonMouseExited
+        if(!spLast.equals("account")) this.settingsAccountPanelButton.setBackground(Color.white);
+    }//GEN-LAST:event_settingsAccountPanelButtonMouseExited
+
+    private void settingsAccountPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsAccountPanelButtonActionPerformed
+        spLast = "account";
+        this.settingsAccountPanelButton.setBackground(Color.cyan);
+        this.settingsAccountPanel.setVisible(true);
+    }//GEN-LAST:event_settingsAccountPanelButtonActionPerformed
+
+    private void settingsAccountResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsAccountResetButtonActionPerformed
+        this.settingsAccountEmail.setText("");
+        this.settingsAccountName.setText("");
+        this.settingsAccountOldPassword.setText("");
+        this.settingsAccountNewPassword.setText("");
+        this.settingsAccountMsg.setText("");
+    }//GEN-LAST:event_settingsAccountResetButtonActionPerformed
+
+    private void settingsAccountSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsAccountSaveButtonActionPerformed
+        String oldPassword = String.valueOf(this.settingsAccountOldPassword.getPassword());
+        if(!this.db.GetSessionValue("password").equals(oldPassword)){
+            this.settingsAccountMsg.setForeground(Color.red);
+            this.settingsAccountMsg.setText("Incorrect Password!");
+            return;
+        }
+        String name = this.settingsAccountName.getText();
+        String email = this.settingsAccountEmail.getText();
+        String newPassword = String.valueOf(this.settingsAccountNewPassword.getPassword());
+        String query = String.format("name=\"%s\", email=\"%s\"", name, email);
+        if(!newPassword.isEmpty()) query += String.format(", password=\"%s\"", newPassword);
+        if(this.db.updateData("librarian", query, "staffID=\""+this.db.GetSessionValue("staffID")+"\"") != 0){
+            this.settingsAccountMsg.setForeground(Color.green);
+            this.settingsAccountMsg.setText("Data updated");
+        }else{
+            this.settingsAccountMsg.setForeground(Color.red);
+            this.settingsAccountMsg.setText("Faild to update data");
+        }
+    }//GEN-LAST:event_settingsAccountSaveButtonActionPerformed
+
     public void GetSession(ResultSet rs){
         this.db.SessionStart(rs);
+        this.setTitle(this.db.GetSessionValue("name")+" - Library Management System");
+        this.settingsAccountName.setText(this.db.GetSessionValue("name"));
+        this.settingsAccountEmail.setText(this.db.GetSessionValue("email"));
     }
     
     private String bookIdToName(String str){
@@ -2701,6 +2915,20 @@ public class MainWindow extends javax.swing.JFrame {
         }
         
         return result;
+    }
+    
+    private void BooksPanelButtonBgWhite(){
+        this.books.setBackground(Color.white);
+        this.abook.setBackground(Color.white);
+        this.mbook.setBackground(Color.white);
+        this.ibook.setBackground(Color.white);
+        this.rbook.setBackground(Color.white);
+    }
+    
+    private void MembersPanelButtonBgWhite(){
+        this.searchMemberPanelButton.setBackground(Color.white);
+        this.amemberPanelButton.setBackground(Color.white);
+        this.mmemberPanelButton.setBackground(Color.white);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2726,22 +2954,26 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel amemberEmailLabel1;
     private javax.swing.JLabel amemberEmailLabel2;
     private javax.swing.JLabel amemberEmailLabel3;
+    private javax.swing.JLabel amemberEmailLabel4;
     private javax.swing.JTextField amemberIDNumber;
     private javax.swing.JLabel amemberIDNumberLable;
     private javax.swing.JLabel amemberIDNumberLable1;
     private javax.swing.JLabel amemberIDNumberLable2;
     private javax.swing.JLabel amemberIDNumberLable3;
+    private javax.swing.JLabel amemberIDNumberLable4;
     private javax.swing.JTextField amemberName;
     private javax.swing.JLabel amemberNameLabel;
     private javax.swing.JLabel amemberNameLabel1;
     private javax.swing.JLabel amemberNameLabel2;
     private javax.swing.JLabel amemberNameLabel3;
+    private javax.swing.JLabel amemberNameLabel4;
     private javax.swing.JPanel amemberPanel;
     private javax.swing.JButton amemberPanelButton;
     private javax.swing.JLabel amemberPanelTitle;
     private javax.swing.JTextField amemberPhoneNumber;
     private javax.swing.JLabel amemberPhoneNumberLabel;
     private javax.swing.JLabel amemberPhoneNumberLabel1;
+    private javax.swing.JLabel amemberPhoneNumberLabel2;
     private javax.swing.JTextArea amemberPmtAddress;
     private javax.swing.JLabel amemberPmtAddressLabel;
     private javax.swing.JTextArea amemberTempAddress;
@@ -2755,6 +2987,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel booksPanelSidebar;
     private javax.swing.JPanel booksPanelSidebarHeader;
     private javax.swing.JLabel booksPanelSidebarHeaderText;
+    private javax.swing.JLabel booksPanelSidebarHeaderText1;
     private javax.swing.JTable booksSearchResult;
     private javax.swing.JButton delteMemberButton;
     private javax.swing.JButton ibook;
@@ -2805,6 +3038,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JLayeredPane layerContainer;
+    private javax.swing.JButton mbook;
     private javax.swing.JButton mbookDeleteButton;
     private javax.swing.JLabel mbookISBN;
     private javax.swing.JPanel mbookPanel;
@@ -2814,7 +3048,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton mbookSearchButton;
     private javax.swing.JLabel mbookTitle;
     private javax.swing.JLabel mbook_msg;
-    private javax.swing.JButton mbooks;
     private javax.swing.JButton memberContainerButton;
     private javax.swing.JLayeredPane memberPanelContainer;
     private javax.swing.JPanel memberPanelSidebar;
@@ -2836,6 +3069,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton mmemberSearchButton;
     private javax.swing.JLabel mmemberTA;
     private javax.swing.JTextArea notificationText;
+    private javax.swing.JButton rbook;
     private javax.swing.JTextField rbookBookID;
     private javax.swing.JTextArea rbookBookIssued;
     private javax.swing.JButton rbookButton;
@@ -2847,7 +3081,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel rbookPanel;
     private javax.swing.JButton rbookResetButton;
     private javax.swing.JLabel rbook_msg;
-    private javax.swing.JButton rbooks;
     private javax.swing.JButton reloadButton;
     private javax.swing.JButton reloadButton1;
     private javax.swing.JButton resetButton;
@@ -2859,15 +3092,25 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel searchMemberPanel;
     private javax.swing.JButton searchMemberPanelButton;
     private javax.swing.JButton sendNotification;
+    private javax.swing.JTextField settingsAccountEmail;
+    private javax.swing.JLabel settingsAccountMsg;
+    private javax.swing.JTextField settingsAccountName;
+    private javax.swing.JPasswordField settingsAccountNewPassword;
+    private javax.swing.JPasswordField settingsAccountOldPassword;
+    private javax.swing.JPanel settingsAccountPanel;
+    private javax.swing.JButton settingsAccountPanelButton;
+    private javax.swing.JButton settingsAccountResetButton;
+    private javax.swing.JButton settingsAccountSaveButton;
     private javax.swing.JLayeredPane settingsContainer;
     private javax.swing.JButton settingsContainerButton;
     public javax.swing.JPanel settingsContainerPanel;
+    private javax.swing.JLabel settingsPanelHeader;
     private javax.swing.JPanel settingsPanelSidebar;
     private javax.swing.JPanel settingsPanelSidebarHeader;
-    private javax.swing.JLabel settingsPanelSidebarHeaderText;
     // End of variables declaration//GEN-END:variables
     private final DataBase db;
     private String bpLast = "";
     private String mpLast = "";
     private String spLast = "";
+    private String mainPanel = "";
 }

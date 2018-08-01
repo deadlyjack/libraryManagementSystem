@@ -111,8 +111,8 @@ public class PasswordRecovery extends javax.swing.JFrame {
         String to = this.email.getText();
         String sub = "no reply, password recovery";
         String password = getRandomHexString(6);
-        String from = "projects.libmans@foxdebug.com";
-        String fromName = "library management sytem";
+        String from = "anamika@projects.libmans.com";
+        String fromName = "library management system";
         String msg = "Your password is: "+password;
         String type = this.typeReset.equals("admin")?"admin":"librarian";
         ResultSet rs = this.db.getRows(type, "email=\""+to+"\"");
