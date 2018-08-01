@@ -4,7 +4,7 @@
   1. mysql running on your pc to run this programm.
   
 -> steps
-  1. User '1234' as default password to login into 'admin window'
+  1. Use '1234' as default password to login into 'admin window'
   2. Update 'admin' info/data to create librarians account.
   3. You can chage password and different information later.
   4. Add librarian in 'add librarian section'.
@@ -21,5 +21,7 @@
   
   14. If you don't know member or book id you can simply search it from respected section.
   15. If admin or librarian forgot password, they can simply rquest for new password that will sent via email.
+  
+  16. Username means staff ID added admin.
   
 for bugs report at projects.libmans@foxdebug.com
